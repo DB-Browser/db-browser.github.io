@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f7fbff"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0b63a5"/>
+      <stop offset="100%" stop-color="#0b4e85"/>
+    </linearGradient>
+    <filter id="s" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#0b63a5" flood-opacity="0.15"/>
+    </filter>
+    <clipPath id="r8"><rect rx="20" ry="20" x="0" y="0" width="1200" height="630"/></clipPath>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#g)"/>
+
+  <!-- Accent bar -->
+  <rect x="0" y="0" width="1200" height="110" fill="url(#bar)"/>
+
+  <!-- Logo block -->
+  <g transform="translate(60,30)" filter="url(#s)">
+    <rect x="0" y="0" width="70" height="70" rx="14" fill="#0b63a5"/>
+    <!-- DB icon -->
+    <g transform="translate(12,14)" stroke="#fff" stroke-width="3" fill="none">
+      <ellipse cx="23" cy="10" rx="20" ry="7"/>
+      <path d="M3 10v18c0 4 40 4 40 0V10"/>
+    </g>
+  </g>
+
+  <!-- Title and subtitle on the bar -->
+  <text x="150" y="58" fill="#ffffff" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="34" font-weight="800">DB Browser (SQLCipher) for Windows</text>
+  <text x="150" y="88" fill="#d7ecfb" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="20" font-weight="600">Portable download • Encrypt • Decrypt • Troubleshoot</text>
+
+  <!-- Main card -->
+  <g transform="translate(60,170)" filter="url(#s)">
+    <rect x="0" y="0" width="1080" height="360" rx="18" fill="#f8fafc" stroke="#e6eef6"/>
+
+    <!-- Left content -->
+    <g transform="translate(40,40)">
+      <text x="0" y="0" fill="#0b2545" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="40" font-weight="800">Portable DB Browser with SQLCipher</text>
+      <text x="0" y="46" fill="#6b7280" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="22">Open, view and encrypt SQLite databases on Windows</text>
+
+      <!-- CTA button -->
+      <g transform="translate(0,90)">
+        <rect x="0" y="-36" width="520" height="64" rx="12" fill="#0b63a5"/>
+        <g transform="translate(18,-6)">
+          <!-- download icon -->
+          <path d="M24 6v20 M12 18l12 12 12-12 M36 42H12" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </g>
+        <text x="66" y="8" fill="#ffffff" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="28" font-weight="800">Download Portable (v3.13.1)</text>
+      </g>
+
+      <!-- Bullets -->
+      <g transform="translate(4,160)" fill="#0b2545" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="22">
+        <circle cx="8" cy="-8" r="5" fill="#0b63a5"/>
+        <text x="24" y="0" fill="#0b2545">AES‑256 encryption via SQLCipher</text>
+        <circle cx="8" cy="32" r="5" fill="#0b63a5"/>
+        <text x="24" y="40" fill="#0b2545">Windows 10 / 11 • No admin required</text>
+        <circle cx="8" cy="72" r="5" fill="#0b63a5"/>
+        <text x="24" y="80" fill="#0b2545">Guides, troubleshooting, and migration</text>
+      </g>
+    </g>
+
+    <!-- Right illustration -->
+    <g transform="translate(720,40)">
+      <rect x="0" y="0" width="320" height="280" rx="14" fill="#ffffff" stroke="#e6eef6"/>
+      <g transform="translate(18,18)">
+        <rect x="0" y="0" width="284" height="46" rx="8" fill="#eef6fb" stroke="#dbeefc"/>
+        <text x="16" y="30" fill="#0b63a5" font-size="20" font-weight="700" font-family="Segoe UI, Roboto, Arial, sans-serif">New Encrypted Database</text>
+        <g transform="translate(0,70)">
+          <rect x="0" y="0" width="284" height="36" rx="6" fill="#f3f4f6"/>
+          <text x="12" y="24" fill="#6b7280" font-size="18" font-family="Segoe UI, Roboto, Arial, sans-serif">Enter passphrase…</text>
+        </g>
+        <g transform="translate(0,120)">
+          <rect x="0" y="0" width="284" height="36" rx="6" fill="#f3f4f6"/>
+          <text x="12" y="24" fill="#6b7280" font-size="18" font-family="Segoe UI, Roboto, Arial, sans-serif">Confirm passphrase…</text>
+        </g>
+        <g transform="translate(0,170)">
+          <rect x="0" y="0" width="140" height="40" rx="8" fill="#0b63a5"/>
+          <text x="20" y="26" fill="#fff" font-size="18" font-weight="700" font-family="Segoe UI, Roboto, Arial, sans-serif">Create</text>
+        </g>
+      </g>
+
+      <!-- Lock overlay -->
+      <g transform="translate(240,240)" opacity="0.12">
+        <rect x="-40" y="-60" width="120" height="120" rx="20" fill="#0b63a5"/>
+        <g transform="translate(-14,-36)" stroke="#fff" stroke-width="5" fill="none">
+          <rect x="0" y="40" width="68" height="52" rx="10"/>
+          <path d="M16 40v-8a18 18 0 0136 0v8"/>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- Footer note -->
+  <text x="60" y="600" fill="#6b7280" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="20">Unofficial resource • Verify downloads on the official repository</text>
+</svg>

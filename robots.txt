@@ -1,0 +1,7 @@
+# robots.txt for https://db-browser.github.io/
+# Allow full indexing; sitemap listed below
+
+User-agent: *
+Allow: /
+
+Sitemap: https://db-browser.github.io/sitemap.xml

@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>Migrate SQLite ↔ SQLCipher on Windows — DB Browser Portable</title>
+  <meta name="description" content="How to migrate plain SQLite databases to SQLCipher encryption and decrypt back to plain SQLite on Windows. Safe export/import, backups, and version compatibility." />
+  <link rel="canonical" href="https://db-browser.github.io/migrate-to-sqlcipher.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Migrate SQLite ↔ SQLCipher on Windows — DB Browser Portable">
+  <meta property="og:description" content="Step-by-step migration: convert plain SQLite to SQLCipher and decrypt SQLCipher back to plain SQLite using DB Browser on Windows." />
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://db-browser.github.io/migrate-to-sqlcipher.html">
+  <meta property="og:image" content="https://db-browser.github.io/og-image.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Migrate SQLite ↔ SQLCipher on Windows — DB Browser Portable">
+  <meta name="twitter:description" content="Convert between encrypted and plain SQLite files safely. Backup, export/import, and version tips.">
+  <meta name="twitter:image" content="https://db-browser.github.io/og-image.png">
+
+  <meta name="author" content="Community / Unofficial resource">
+  <meta name="last-modified" content="">
+
+  <!-- Inline critical CSS (single <style>) -->
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#0b2545;
+      --muted:#6b7280;
+      --accent:#0b63a5; /* blue similar to official */
+      --accent-2:#f7a21a; /* warm accent */
+      --card:#f8fafc;
+      --radius:10px;
+      --maxwidth:1100px;
+      --focus: 3px solid rgba(11,99,165,0.15);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;font-size:16px;line-height:1.45;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+    a{color:var(--accent)}
+    header{background:linear-gradient(180deg,#ffffff 0%, #f7fbff 100%);border-bottom:1px solid #e6eef6}
+    .wrap{max-width:var(--maxwidth);margin:0 auto;padding:20px}
+    .site-header{display:flex;align-items:center;gap:18px;padding:10px 0}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand h1{font-size:18px;margin:0}
+
+    nav{margin-left:auto}
+    .nav-list{display:flex;gap:12px;flex-wrap:wrap}
+    .nav-list a{padding:8px 12px;border-radius:8px;text-decoration:none;color:var(--text);font-weight:600}
+    .nav-list a[aria-current="page"]{background:#eef6fb;color:var(--accent);border:1px solid #dbeefc}
+    .nav-list a:focus{outline:var(--focus)}
+
+    main{padding:28px 20px}
+    .hero{display:grid;gap:18px;grid-template-columns:1fr;align-items:center}
+    .kicker{color:var(--muted);font-weight:600}
+    .title{font-size:28px;margin:0;color:var(--text)}
+    .lead{color:var(--muted);max-width:72ch}
+
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;border:0;background:var(--accent);color:white;font-weight:700;text-decoration:none;cursor:pointer}
+    .btn.secondary{background:#eef6fb;color:var(--accent);border:1px solid #dbeefc}
+    .btn:focus{outline:var(--focus)}
+
+    .card{background:var(--card);padding:16px;border-radius:var(--radius);box-shadow:0 1px 0 rgba(11,99,165,0.03)}
+
+    .grid-2{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+
+    footer{padding:24px 20px;border-top:1px solid #e6eef6;margin-top:40px}
+    .footer-grid{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+    .muted{color:var(--muted);font-size:14px}
+
+    .note{background:#fff7ed;border:1px solid #ffedd5;color:#7c2d12;padding:10px;border-radius:8px}
+
+    /* cookie banner */
+    .cookie-banner{position:fixed;left:16px;right:16px;bottom:16px;background:linear-gradient(180deg,#fffefe,#f7fbff);padding:12px;border-radius:12px;box-shadow:0 10px 30px rgba(11,99,165,0.08);display:flex;align-items:center;gap:12px;z-index:999}
+    .cookie-text{flex:1}
+
+    /* responsiveness */
+    @media (max-width:999px){
+      .grid-2{grid-template-columns:1fr}
+    }
+    @media (max-width:799px){
+      .nav-list{display:none}
+      .mobile-nav{display:flex;margin-left:auto}
+    }
+
+    a:focus,button:focus{outline-offset:3px}
+    .visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+  </style>
+
+  <!-- Inline SVG symbols -->
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="icon-logo" viewBox="0 0 64 64">
+      <rect x="6" y="14" width="52" height="36" rx="4" fill="currentColor" />
+      <path d="M18 22h28M18 30h28M18 38h16" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+    </symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 13l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 21H3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M7 11V8a5 5 0 0110 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="icon-db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="9" ry="3" stroke="currentColor" stroke-width="2" fill="none"/><path d="M3 6v6c0 1.7 4 3 9 3s9-1.3 9-3V6" stroke="currentColor" stroke-width="2" fill="none"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  </svg>
+
+  <!-- JSON-LD: SoftwareApplication + BreadcrumbList + FAQPage + HowTo (two flows) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"SoftwareApplication",
+        "name":"DB Browser (SQLCipher) for Windows (Unofficial)",
+        "description":"Migration guide: convert plain SQLite to SQLCipher and decrypt SQLCipher back to plain SQLite using DB Browser on Windows.",
+        "operatingSystem":"Windows 10, Windows 11",
+        "applicationCategory":"DeveloperApplication,Database",
+        "softwareVersion":"3.13.1",
+        "url":"https://db-browser.github.io/migrate-to-sqlcipher.html",
+        "downloadUrl":"https://github.com/sqlitebrowser/sqlitebrowser/releases/download/v3.13.1/SQLiteDatabaseBrowserPortable_3.13.1.paf.exe",
+        "offers":{
+          "@type":"Offer",
+          "price":"0",
+          "priceCurrency":"USD"
+        },
+        "publisher":{
+          "@type":"Organization",
+          "name":"Community / Unofficial resource",
+          "url":"https://db-browser.github.io/"
+        }
+      },
+      {
+        "@type":"BreadcrumbList",
+        "itemListElement":[
+          {"@type":"ListItem","position":1,"name":"Home","item":"https://db-browser.github.io/"},
+          {"@type":"ListItem","position":2,"name":"Migrate","item":"https://db-browser.github.io/migrate-to-sqlcipher.html"}
+        ]
+      },
+      {
+        "@type":"FAQPage",
+        "mainEntity":[
+          {"@type":"Question","name":"What’s the safest way to migrate to SQLCipher?","acceptedAnswer":{"@type":"Answer","text":"Back up your source DB, open it, export to SQL, create a new encrypted DB, and import the SQL dump. Verify integrity and keep the old copy until validated."}},
+          {"@type":"Question","name":"Can I convert SQLCipher v3 databases to v4?","acceptedAnswer":{"@type":"Answer","text":"Yes. Open the DB with a tool that supports the original parameters, export to SQL, then import into a new DB with v4 defaults. Always keep backups."}},
+          {"@type":"Question","name":"How do I decrypt to plain SQLite?","acceptedAnswer":{"@type":"Answer","text":"Open the encrypted DB with the correct key, export to SQL, then import into a new plain SQLite database."}},
+          {"@type":"Question","name":"Will triggers and indexes be preserved?","acceptedAnswer":{"@type":"Answer","text":"Yes, the SQL export includes schema (tables, indexes, triggers, views) and data. Verify after import and re-create external extensions if any."}}
+        ]
+      },
+      {
+        "@type":"HowTo",
+        "name":"Migrate plain SQLite to SQLCipher (encrypted)",
+        "url":"https://db-browser.github.io/migrate-to-sqlcipher.html#to-sqlcipher",
+        "step":[
+          {"@type":"HowToStep","name":"Open the source SQLite DB","itemListElement":[{"@type":"HowToDirection","text":"Open your existing plain .db/.sqlite file in DB Browser."}]},
+          {"@type":"HowToStep","name":"Export to SQL","itemListElement":[{"@type":"HowToDirection","text":"Use Export → Database to SQL to dump schema and data."}]},
+          {"@type":"HowToStep","name":"Create a new encrypted DB","itemListElement":[{"@type":"HowToDirection","text":"Use File → New Database and set a strong SQLCipher passphrase when prompted."}]},
+          {"@type":"HowToStep","name":"Import the SQL dump","itemListElement":[{"@type":"HowToDirection","text":"In the new encrypted DB, use Import → Database from SQL to restore schema and data."}]},
+          {"@type":"HowToStep","name":"Verify integrity","itemListElement":[{"@type":"HowToDirection","text":"Run PRAGMA cipher_integrity_check; and inspect sample rows to confirm migration succeeded."}]}
+        ]
+      },
+      {
+        "@type":"HowTo",
+        "name":"Decrypt SQLCipher to plain SQLite",
+        "url":"https://db-browser.github.io/migrate-to-sqlcipher.html#to-plain",
+        "step":[
+          {"@type":"HowToStep","name":"Open the encrypted DB","itemListElement":[{"@type":"HowToDirection","text":"Open with the correct key and parameters."}]},
+          {"@type":"HowToStep","name":"Export to SQL","itemListElement":[{"@type":"HowToDirection","text":"Use Export → Database to SQL to dump schema and data."}]},
+          {"@type":"HowToStep","name":"Create a new plain SQLite DB","itemListElement":[{"@type":"HowToDirection","text":"Use File → New Database without setting encryption."}]},
+          {"@type":"HowToStep","name":"Import the SQL dump","itemListElement":[{"@type":"HowToDirection","text":"Import the SQL into the plain DB and verify objects and row counts."}]}
+        ]
+      }
+    ]
+  }
+  </script>
+
+</head>
+<body>
+  <header>
+    <div class="wrap site-header" role="banner">
+      <div class="brand" aria-label="site brand">
+        <svg width="44" height="44" viewBox="0 0 64 64" fill="var(--accent)"><use href="#icon-logo"></use></svg>
+        <div>
+          <h1 style="font-size:18px;margin:0">DB Browser (SQLCipher) — Windows</h1>
+          <div class="muted" style="font-size:13px">Portable download, guides, troubleshooting</div>
+        </div>
+      </div>
+
+      <nav aria-label="Main Navigation">
+        <div class="nav-list">
+          <a href="download-windows.html">Download</a>
+          <a href="getting-started.html">Getting Started</a>
+          <a href="encrypt-decrypt-sqlcipher.html">Encrypt / Decrypt</a>
+          <a href="troubleshooting-sqlcipher.html">Troubleshooting</a>
+          <a href="migrate-to-sqlcipher.html" aria-current="page">Migrate</a>
+          <a href="best-practices-security.html">Security</a>
+          <a href="alternatives-comparison.html">Alternatives</a>
+        </div>
+      </nav>
+
+      <div class="mobile-nav" style="display:none">
+        <button aria-label="open menu" class="btn secondary" onclick="document.querySelector('.nav-list').style.display='flex'">Menu</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" id="main">
+    <nav aria-label="Breadcrumbs" class="muted" style="margin-bottom:10px;font-size:14px">
+      <a href="index.html">Home</a> › Migrate
+    </nav>
+
+    <section class="hero card" aria-labelledby="hero-title">
+      <div class="grid-2">
+        <div>
+          <div class="kicker">Safe conversions • Backups first</div>
+          <h2 id="hero-title" class="title">Migrate SQLite to SQLCipher (and Back)</h2>
+          <p class="lead">Convert a plain SQLite database into an encrypted SQLCipher one, and decrypt encrypted databases back to plain SQLite. Use safe export/import flows and verify integrity on Windows.</p>
+          <div class="cta-row" style="margin-top:14px">
+            <a class="btn" href="https://github.com/sqlitebrowser/sqlitebrowser/releases/download/v3.13.1/SQLiteDatabaseBrowserPortable_3.13.1.paf.exe" title="Download Portable EXE"
+               onclick="trackDownload(event,'SQLiteDatabaseBrowserPortable_3.13.1.paf.exe','https://github.com/sqlitebrowser/sqlitebrowser/releases/download/v3.13.1/SQLiteDatabaseBrowserPortable_3.13.1.paf.exe')" rel="noopener noreferrer" target="_blank">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin-right:6px"><use href="#icon-download"></use></svg>
+              Download Portable (v3.13.1)
+            </a>
+            <a class="btn secondary" href="encrypt-decrypt-sqlcipher.html">Encrypt / Decrypt guide</a>
+            <a class="btn secondary" href="best-practices-security.html">Security best practices</a>
+          </div>
+        </div>
+        <aside class="card" style="height:max-content">
+          <div style="display:flex;align-items:center;gap:12px">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent)"><use href="#icon-lock"></use></svg>
+            <div>
+              <strong>Before you start</strong>
+              <ul class="muted" style="margin:8px 0;padding-left:18px">
+                <li>Back up your source database</li>
+                <li>Note SQLCipher version and parameters</li>
+                <li>Test on a copy before migrating production</li>
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="to-sqlcipher" class="card" style="margin-top:18px">
+      <h3 style="margin-top:0">Convert plain SQLite → SQLCipher (encrypted)</h3>
+      <ol class="muted" style="margin:8px 0;padding-left:18px">
+        <li><strong>Open the plain DB</strong> — open your .db/.sqlite file in DB Browser.</li>
+        <li><strong>Export to SQL</strong> — use Export → Database to SQL to create a dump.</li>
+        <li><strong>Create a new encrypted DB</strong> — File → New Database, then set a strong passphrase when prompted.</li>
+        <li><strong>Import the SQL dump</strong> — Import → Database from SQL into the encrypted DB.</li>
+        <li><strong>Verify integrity</strong> — run <code>PRAGMA cipher_integrity_check;</code> and test queries.</li>
+      </ol>
+      <div class="note">Tip: Keep the old file until you validate row counts, schema objects, and application compatibility.</div>
+    </section>
+
+    <section id="to-plain" class="card" style="margin-top:18px">
+      <h3 style="margin-top:0">Decrypt SQLCipher → plain SQLite</h3>
+      <ol class="muted" style="margin:8px 0;padding-left:18px">
+        <li><strong>Open with key</strong> — open the encrypted DB using the correct passphrase and parameters.</li>
+        <li><strong>Export to SQL</strong> — Export → Database to SQL to dump schema and data.</li>
+        <li><strong>Create a new plain DB</strong> — File → New Database without encryption.</li>
+        <li><strong>Import the SQL dump</strong> — Import → Database from SQL.</li>
+        <li><strong>Validate</strong> — check object counts and sample data; run <code>PRAGMA integrity_check;</code>.</li>
+      </ol>
+    </section>
+
+    <section id="versions" class="card" style="margin-top:18px">
+      <h3 style="margin-top:0">Move between SQLCipher versions (v3 ↔ v4)</h3>
+      <ul class="muted" style="margin:8px 0;padding-left:18px">
+        <li>Open the DB with a tool that matches the original version and settings.</li>
+        <li>Export to SQL, then import into a new encrypted DB with the target version’s defaults.</li>
+        <li>Re-test access in your apps and keep backups.</li>
+      </ul>
+      <div class="cta-row">
+        <a class="btn secondary" href="troubleshooting-sqlcipher.html">Troubleshooting tips</a>
+        <a class="btn secondary" href="encrypt-decrypt-sqlcipher.html">Encrypt / Decrypt guide</a>
+      </div>
+    </section>
+
+    <section id="faq" class="card" style="margin-top:18px">
+      <h3 style="margin-top:0">FAQ</h3>
+      <details>
+        <summary><strong>Will views, triggers, and indexes migrate correctly?</strong></summary>
+        <p class="muted">Yes. The SQL export includes schema objects and data. After import, verify that triggers fire as expected and all indexes exist.</p>
+      </details>
+      <details>
+        <summary><strong>Can I migrate in-place without export/import?</strong></summary>
+        <p class="muted">For best safety and compatibility, use export/import. Direct PRAGMA rekey may not cover version/parameter changes between environments.</p>
+      </details>
+      <details>
+        <summary><strong>My app still can’t open the migrated DB.</strong></summary>
+        <p class="muted">Confirm SQLCipher parameters, and try migrating using the same tool/version as your app. See <a href="troubleshooting-sqlcipher.html">Troubleshooting</a>.</p>
+      </details>
+    </section>
+
+    <div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <div class="muted">Page last modified: <span id="lastModified" class="muted">--</span></div>
+      <div class="muted">|</div>
+      <div class="muted">Canonical: <a href="https://db-browser.github.io/migrate-to-sqlcipher.html">https://db-browser.github.io/migrate-to-sqlcipher.html</a></div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="wrap footer-grid">
+      <div class="muted">© Community • Unofficial resource • <a href="https://github.com/sqlitebrowser/sqlitebrowser">Source</a></div>
+      <div style="margin-left:auto" class="muted">Privacy: <a href="#" onclick="openConsent()">Cookie settings</a></div>
+    </div>
+  </footer>
+
+  <!-- Cookie banner (accept / decline / close) -->
+  <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite" style="display:none">
+    <div style="display:flex;align-items:center;gap:12px">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)"><use href="#icon-db"></use></svg>
+    </div>
+    <div class="cookie-text">
+      <strong>We use analytics</strong>
+      <div class="muted">This site uses Google Analytics (GA4) to collect anonymous usage data. Accept to enable analytics. Decline to refuse.</div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" id="acceptCookies">Accept</button>
+      <button class="btn secondary" id="declineCookies">Decline</button>
+      <button class="btn secondary" id="closeBanner" aria-label="Close cookie banner"><svg width="14" height="14" viewBox="0 0 24 24"><use href="#icon-close"></use></svg></button>
+    </div>
+  </div>
+
+  <noscript><div style="padding:12px;background:#fff3cd;color:#856404;text-align:center">JavaScript is required for download tracking and cookie consent. You can still download the file directly.</div></noscript>
+
+  <!-- Inline JS (analytics + consent + small helpers) -->
+  <script>
+    /* Configuration */
+    const GA_MEASUREMENT_ID = 'G-N1MPKLJ6KC';
+    const DOWNLOAD_FILE_NAME = 'SQLiteDatabaseBrowserPortable_3.13.1.paf.exe';
+    const DOWNLOAD_URL = 'https://github.com/sqlitebrowser/sqlitebrowser/releases/download/v3.13.1/SQLiteDatabaseBrowserPortable_3.13.1.paf.exe';
+
+    /* Consent management */
+    const CONSENT_KEY = 'dbbrowser_consent_v1'; // values: accepted, declined, closed
+
+    function setConsent(val){ try{localStorage.setItem(CONSENT_KEY,val)}catch(e){} }
+    function getConsent(){ try{return localStorage.getItem(CONSENT_KEY)}catch(e){return null} }
+
+    function showBanner(){document.getElementById('cookieBanner').style.display='flex'}
+    function hideBanner(){document.getElementById('cookieBanner').style.display='none'}
+
+    document.getElementById('acceptCookies').addEventListener('click',function(){setConsent('accepted');hideBanner();loadGA();});
+    document.getElementById('declineCookies').addEventListener('click',function(){setConsent('declined');hideBanner();});
+    document.getElementById('closeBanner').addEventListener('click',function(){setConsent('closed');hideBanner();});
+
+    function openConsent(){ showBanner(); }
+
+    window.addEventListener('load',function(){
+      // lastModified
+      var lm = document.lastModified || new Date().toISOString();
+      document.querySelector('meta[name="last-modified"]').setAttribute('content', lm);
+      document.getElementById('lastModified').textContent = lm;
+
+      // Consent boot
+      const consent = getConsent();
+      if(!consent){ showBanner(); }
+      if(consent === 'accepted') loadGA();
+    });
+
+    /* Load GA4 dynamically after consent */
+    function loadGA(){
+      if(window.gtag){return}
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments)}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_MEASUREMENT_ID, { 'anonymize_ip': true });
+    }
+
+    /* Safe wrapper for download events */
+    function trackDownload(e, label, url){
+      try{
+        const consent = getConsent();
+        if(consent === 'accepted' && window.gtag){
+          gtag('event','file_download',{event_category:'downloads', event_label: label, file_url: url});
+        }
+      }catch(err){/* swallow */}
+    }
+
+    // Accessibility: keyboard ESC closes banner
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ hideBanner(); } });
+
+  </script>
+
+</body>
+</html>

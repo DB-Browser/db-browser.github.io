@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>DB Browser (SQLCipher) vs Alternatives — Encrypted SQLite on Windows</title>
+  <meta name="description" content="Compare DB Browser (SQLCipher) with alternatives for encrypted SQLite on Windows. Pros, considerations, and when to choose each tool." />
+  <link rel="canonical" href="https://db-browser.github.io/alternatives-comparison.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="DB Browser (SQLCipher) vs Alternatives — Encrypted SQLite on Windows">
+  <meta property="og:description" content="A practical comparison for working with SQLCipher-encrypted SQLite databases on Windows: strengths, trade-offs, and next steps." />
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://db-browser.github.io/alternatives-comparison.html">
+  <meta property="og:image" content="https://db-browser.github.io/og-image.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DB Browser (SQLCipher) vs Alternatives — Encrypted SQLite on Windows">
+  <meta name="twitter:description" content="Compare tools for SQLCipher-encrypted SQLite on Windows and pick what fits your workflow.">
+  <meta name="twitter:image" content="https://db-browser.github.io/og-image.png">
+
+  <meta name="author" content="Community / Unofficial resource">
+  <meta name="last-modified" content="">
+
+  <!-- Inline critical CSS (single <style>) -->
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#0b2545;
+      --muted:#6b7280;
+      --accent:#0b63a5; /* blue similar to official */
+      --accent-2:#f7a21a; /* warm accent */
+      --card:#f8fafc;
+      --radius:10px;
+      --maxwidth:1100px;
+      --focus: 3px solid rgba(11,99,165,0.15);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;font-size:16px;line-height:1.45;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+    a{color:var(--accent)}
+    header{background:linear-gradient(180deg,#ffffff 0%, #f7fbff 100%);border-bottom:1px solid #e6eef6}
+    .wrap{max-width:var(--maxwidth);margin:0 auto;padding:20px}
+    .site-header{display:flex;align-items:center;gap:18px;padding:10px 0}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand h1{font-size:18px;margin:0}
+
+    nav{margin-left:auto}
+    .nav-list{display:flex;gap:12px;flex-wrap:wrap}
+    .nav-list a{padding:8px 12px;border-radius:8px;text-decoration:none;color:var(--text);font-weight:600}
+    .nav-list a[aria-current="page"]{background:#eef6fb;color:var(--accent);border:1px solid #dbeefc}
+    .nav-list a:focus{outline:var(--focus)}
+
+    main{padding:28px 20px}
+    .hero{display:grid;gap:18px;grid-template-columns:1fr;align-items:center}
+    .kicker{color:var(--muted);font-weight:600}
+    .title{font-size:28px;margin:0;color:var(--text)}
+    .lead{color:var(--muted);max-width:72ch}
+
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;border:0;background:var(--accent);color:white;font-weight:700;text-decoration:none;cursor:pointer}
+    .btn.secondary{background:#eef6fb;color:var(--accent);border:1px solid #dbeefc}
+    .btn:focus{outline:var(--focus)}
+
+    .card{background:var(--card);padding:16px;border-radius:var(--radius);box-shadow:0 1px 0 rgba(11,99,165,0.03)}
+
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .grid-2{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+
+    footer{padding:24px 20px;border-top:1px solid #e6eef6;margin-top:40px}
+    .footer-grid{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+    .muted{color:var(--muted);font-size:14px}
+
+    .note{background:#fff7ed;border:1px solid #ffedd5;color:#7c2d12;padding:10px;border-radius:8px}
+
+    /* cookie banner */
+    .cookie-banner{position:fixed;left:16px;right:16px;bottom:16px;background:linear-gradient(180deg,#fffefe,#f7fbff);padding:12px;border-radius:12px;box-shadow:0 10px 30px rgba(11,99,165,0.08);display:flex;align-items:center;gap:12px;z-index:999}
+    .cookie-text{flex:1}
+
+    /* responsiveness */
+    @media (max-width:1099px){
+      .grid-3{grid-template-columns:1fr 1fr}
+      .grid-2{grid-template-columns:1fr}
+    }
+    @media (max-width:799px){
+      .nav-list{display:none}
+      .mobile-nav{display:flex;margin-left:auto}
+      .grid-3{grid-template-columns:1fr}
+    }
+
+    a:focus,button:focus{outline-offset:3px}
+    .visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+  </style>
+
+  <!-- Inline SVG symbols -->
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="icon-logo" viewBox="0 0 64 64">
+      <rect x="6" y="14" width="52" height="36" rx="4" fill="currentColor" />
+      <path d="M18 22h28M18 30h28M18 38h16" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+    </symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 13l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 21H3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M7 11V8a5 5 0 0110 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="icon-db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="9" ry="3" stroke="currentColor" stroke-width="2" fill="none"/><path d="M3 6v6c0 1.7 4 3 9 3s9-1.3 9-3V6" stroke="currentColor" stroke-width="2" fill="none"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  </svg>
+
+  <!-- JSON-LD: SoftwareApplication + BreadcrumbList + FAQPage + ItemList -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"SoftwareApplication",
+        "name":"DB Browser (SQLCipher) for Windows (Unofficial)",
+        "description":"Comparison of tools for working with SQLCipher-encrypted SQLite databases on Windows.",
+        "operatingSystem":"Windows 10, Windows 11",
+        "applicationCategory":"DeveloperApplication,Database",
+        "softwareVersion":"3.13.1",
+        "url":"https://db-browser.github.io/alternatives-comparison.html",
+        "downloadUrl":"https://github.com/sqlitebrowser/sqlitebrowser/releases/download/v3.13.1/SQLiteDatabaseBrowserPortable_3.13.1.paf.exe",
+        "offers":{
+          "@type":"Offer",
+          "price":"0",
+          "priceCurrency":"USD"
+        },
+        "publisher":{
+          "@type":"Organization",
+          "name":"Community / Unofficial resource",
+          "url":"https://db-browser.github.io/"
+        }
+      },
+      {
+        "@type":"BreadcrumbList",
+        "itemListElement":[
+          {"@type":"ListItem","position":1,"name":"Home","item":"https://db-browser.github.io/"},
+          {"@type":"ListItem","position":2,"name":"Alternatives","item":"https://db-browser.github.io/alternatives-comparison.html"}
+        ]
+      },
+      {
+        "@type":"FAQPage",
+        "mainEntity":[
+          {"@type":"Question","name":"Does every SQLite GUI support SQLCipher out of the box?","acceptedAnswer":{"@type":"Answer","text":"No. Some tools require a build compiled with SQLCipher or additional configuration. Always verify encryption support in your chosen tool."}},
+          {"@type":"Question","name":"Why choose DB Browser (SQLCipher) portable on Windows?","acceptedAnswer":{"@type":"Answer","text":"It’s lightweight, easy to run without admin rights, and focuses on core SQLite/SQLCipher tasks like viewing, editing, encrypting, and migrating."}},
+          {"@type":"Question","name":"How do I verify that encryption is active?","acceptedAnswer":{"@type":"Answer","text":"After opening a DB, run PRAGMA cipher_version; in Execute SQL. If it returns a version, SQLCipher is active for the opened database."}}
+        ]
+      },
+      {
+        "@type":"ItemList",
+        "name":"Alternatives for encrypted SQLite on Windows",
+        "itemListElement":[
+          {"@type":"ListItem","position":1,"name":"DB Browser (SQLCipher) portable","url":"https://db-browser.github.io/"},
+          {"@type":"ListItem","position":2,"name":"SQLiteStudio","url":"https://sqlitestudio.pl/"},
+          {"@type":"ListItem","position":3,"name":"DBeaver","url":"https://dbeaver.io/"},
+          {"@type":"ListItem","position":4,"name":"SQLite Expert","url":"https://www.sqliteexpert.com/"}
+        ]
+      }
+    ]
+  }
+  </script>
+
+</head>
+<body>
+  <header>
+    <div class="wrap site-header" role="banner">
+      <div class="brand" aria-label="site brand">
+        <svg width="44" height="44" viewBox="0 0 64 64" fill="var(--accent)"><use href="#icon-logo"></use></svg>
+        <div>
+          <h1 style="font-size:18px;margin:0">DB Browser (SQLCipher) — Windows</h1>
+          <div class="muted" style="font-size:13px">Portable download, guides, troubleshooting</div>
+        </div>
+      </div>
+
+      <nav aria-label="Main Navigation">
+        <div class="nav-list">
+          <a href="download-windows.html">Download</a>
+          <a href="getting-started.html">Getting Started</a>
+          <a href="encrypt-decrypt-sqlcipher.html">Encrypt / Decrypt</a>
+          <a href="troubleshooting-sqlcipher.html">Troubleshooting</a>
+          <a href="migrate-to-sqlcipher.html">Migrate</a>
+          <a href="best-practices-security.html">Security</a>
+          <a href="alternatives-comparison.html" aria-current="page">Alternatives</a>
+        </div>
+      </nav>
+
+      <div class="mobile-nav" style="display:none">
+        <button aria-label="open menu" class="btn secondary" onclick="document.querySelector('.nav-list').style.display='flex'">Menu</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" id="main">
+    <nav aria-label="Breadcrumbs" class="muted" style="margin-bottom:10px;font-size:14px">
+      <a href="index.html">Home</a> › Alternatives
+    </nav>
+
+    <section class="hero card" aria-labelledby="hero-title">
+      <div class="grid-2">
+        <div>
+          <div class="kicker">Encrypted SQLite • Tool comparison</div>
+          <h2 id="hero-title" class="title">DB Browser (SQLCipher) vs Alternatives</h2>
+          <p class="lead">A pragmatic look at popular tools for SQLCipher‑encrypted SQLite on Windows. Understand strengths and considerations, then choose what fits your workflow. This is an unofficial community resource.</p>
+          <div class="cta-row" style="margin-top:14px">
+            <a class="btn" href="https://github.com/sqlitebrowser/sqlitebrowser/releases/download/v3.13.1/SQLiteDatabaseBrowserPortable_3.13.1.paf.exe" title="Download Portable EXE"
+               onclick="trackDownload(event,'SQLiteDatabaseBrowserPortable_3.13.1.paf.exe','https://github.com/sqlitebrowser/sqlitebrowser/releases/download/v3.13.1/SQLiteDatabaseBrowserPortable_3.13.1.paf.exe')" rel="noopener noreferrer" target="_blank">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin-right:6px"><use href="#icon-download"></use></svg>
+              Download Portable (v3.13.1)
+            </a>
+            <a class="btn secondary" href="download-windows.html">All downloads</a>
+            <a class="btn secondary" href="best-practices-security.html">Security tips</a>
+          </div>
+        </div>
+        <aside class="card" style="height:max-content">
+          <div style="display:flex;align-items:center;gap:12px">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent)"><use href="#icon-lock"></use></svg>
+            <div>
+              <strong>Quick criteria</strong>
+              <ul class="muted" style="margin:8px 0;padding-left:18px">
+                <li>SQLCipher support available</li>
+                <li>Windows portable or easy install</li>
+                <li>Everyday SQLite workflows</li>
+                <li>Community/maintenance status</li>
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:18px">
+      <h3 style="margin-top:0">At a glance</h3>
+      <div class="grid-3">
+        <div class="card">
+          <strong>DB Browser (SQLCipher) — Portable</strong>
+          <ul class="muted" style="margin:8px 0;padding-left:18px">
+            <li>Lightweight, no admin rights required</li>
+            <li>Focused SQLite/SQLCipher GUI workflows</li>
+            <li>Great for quick edits, encrypt/decrypt, migration</li>
+            <li><a href="download-windows.html">Download & get started</a></li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>SQLiteStudio</strong>
+          <ul class="muted" style="margin:8px 0;padding-left:18px">
+            <li>Feature‑rich SQLite GUI</li>
+            <li>SQLCipher support may require plugins/builds</li>
+            <li>Cross‑platform</li>
+            <li><a href="https://sqlitestudio.pl/" target="_blank" rel="noopener">Official site</a></li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>DBeaver</strong>
+          <ul class="muted" style="margin:8px 0;padding-left:18px">
+            <li>General‑purpose DB tool with SQLite support</li>
+            <li>SQLCipher support depends on configuration</li>
+            <li>Broad plugin ecosystem</li>
+            <li><a href="https://dbeaver.io/" target="_blank" rel="noopener">Official site</a></li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>SQLite Expert</strong>
+          <ul class="muted" style="margin:8px 0;padding-left:18px">
+            <li>Commercial‑grade SQLite GUI</li>
+            <li>Check edition/features for SQLCipher support</li>
+            <li>Windows‑focused</li>
+            <li><a href="https://www.sqliteexpert.com/" target="_blank" rel="noopener">Official site</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="note" style="margin-top:10px">Note: SQLCipher availability and configuration differ by tool and version. Always verify encryption support for your environment.</div>
+    </section>
+
+    <section class="card" style="margin-top:18px">
+      <h3 style="margin-top:0">When to choose what</h3>
+      <ul class="muted" style="margin:8px 0;padding-left:18px">
+        <li><strong>DB Browser (SQLCipher)</strong> — you want a focused, portable GUI to open, edit, encrypt/decrypt, and migrate encrypted SQLite quickly on Windows.</li>
+        <li><strong>SQLiteStudio</strong> — you need a rich SQLite‑only tool with cross‑platform support and are comfortable configuring SQLCipher if needed.</li>
+        <li><strong>DBeaver</strong> — you work across many databases and want a single IDE; be prepared to configure SQLCipher.</li>
+        <li><strong>SQLite Expert</strong> — you prefer a Windows‑centric commercial toolset; check editions for encryption capabilities.</li>
+      </ul>
+      <div class="cta-row">
+        <a class="btn secondary" href="download-windows.html">Download DB Browser (SQLCipher)</a>
+        <a class="btn secondary" href="best-practices-security.html">Security best practices</a>
+        <a class="btn secondary" href="troubleshooting-sqlcipher.html">Troubleshooting</a>
+      </div>
+    </section>
+
+    <section class="card" id="faq" style="margin-top:18px">
+      <h3 style="margin-top:0">FAQ</h3>
+      <details>
+        <summary><strong>Does every SQLite GUI support SQLCipher out of the box?</strong></summary>
+        <p class="muted">No. Some require a SQLCipher‑enabled build or extra configuration. Always check documentation for your tool and version.</p>
+      </details>
+      <details>
+        <summary><strong>How do I check if SQLCipher is active?</strong></summary>
+        <p class="muted">After opening your DB, run <code>PRAGMA cipher_version;</code> in Execute SQL. If it returns a version, SQLCipher is in effect for the opened database.</p>
+      </details>
+      <details>
+        <summary><strong>Can I migrate between tools safely?</strong></summary>
+        <p class="muted">Yes. Use export → import with backups. Keep parameters consistent or re‑export/re‑import to adjust versions and settings.</p>
+      </details>
+    </section>
+
+    <div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <div class="muted">Page last modified: <span id="lastModified" class="muted">--</span></div>
+      <div class="muted">|</div>
+      <div class="muted">Canonical: <a href="https://db-browser.github.io/alternatives-comparison.html">https://db-browser.github.io/alternatives-comparison.html</a></div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="wrap footer-grid">
+      <div class="muted">© Community • Unofficial resource • <a href="https://github.com/sqlitebrowser/sqlitebrowser">Source</a></div>
+      <div style="margin-left:auto" class="muted">Privacy: <a href="#" onclick="openConsent()">Cookie settings</a></div>
+    </div>
+  </footer>
+
+  <!-- Cookie banner (accept / decline / close) -->
+  <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite" style="display:none">
+    <div style="display:flex;align-items:center;gap:12px">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)"><use href="#icon-db"></use></svg>
+    </div>
+    <div class="cookie-text">
+      <strong>We use analytics</strong>
+      <div class="muted">This site uses Google Analytics (GA4) to collect anonymous usage data. Accept to enable analytics. Decline to refuse.</div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" id="acceptCookies">Accept</button>
+      <button class="btn secondary" id="declineCookies">Decline</button>
+      <button class="btn secondary" id="closeBanner" aria-label="Close cookie banner"><svg width="14" height="14" viewBox="0 0 24 24"><use href="#icon-close"></use></svg></button>
+    </div>
+  </div>
+
+  <noscript><div style="padding:12px;background:#fff3cd;color:#856404;text-align:center">JavaScript is required for download tracking and cookie consent. You can still download the file directly.</div></noscript>
+
+  <!-- Inline JS (analytics + consent + small helpers) -->
+  <script>
+    /* Configuration */
+    const GA_MEASUREMENT_ID = 'G-N1MPKLJ6KC';
+    const DOWNLOAD_FILE_NAME = 'SQLiteDatabaseBrowserPortable_3.13.1.paf.exe';
+    const DOWNLOAD_URL = 'https://github.com/sqlitebrowser/sqlitebrowser/releases/download/v3.13.1/SQLiteDatabaseBrowserPortable_3.13.1.paf.exe';
+
+    /* Consent management */
+    const CONSENT_KEY = 'dbbrowser_consent_v1'; // values: accepted, declined, closed
+
+    function setConsent(val){ try{localStorage.setItem(CONSENT_KEY,val)}catch(e){} }
+    function getConsent(){ try{return localStorage.getItem(CONSENT_KEY)}catch(e){return null} }
+
+    function showBanner(){document.getElementById('cookieBanner').style.display='flex'}
+    function hideBanner(){document.getElementById('cookieBanner').style.display='none'}
+
+    document.getElementById('acceptCookies').addEventListener('click',function(){setConsent('accepted');hideBanner();loadGA();});
+    document.getElementById('declineCookies').addEventListener('click',function(){setConsent('declined');hideBanner();});
+    document.getElementById('closeBanner').addEventListener('click',function(){setConsent('closed');hideBanner();});
+
+    function openConsent(){ showBanner(); }
+
+    window.addEventListener('load',function(){
+      // lastModified
+      var lm = document.lastModified || new Date().toISOString();
+      document.querySelector('meta[name="last-modified"]').setAttribute('content', lm);
+      document.getElementById('lastModified').textContent = lm;
+
+      // Consent boot
+      const consent = getConsent();
+      if(!consent){ showBanner(); }
+      if(consent === 'accepted') loadGA();
+    });
+
+    /* Load GA4 dynamically after consent */
+    function loadGA(){
+      if(window.gtag){return}
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments)}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_MEASUREMENT_ID, { 'anonymize_ip': true });
+    }
+
+    /* Safe wrapper for download events */
+    function trackDownload(e, label, url){
+      try{
+        const consent = getConsent();
+        if(consent === 'accepted' && window.gtag){
+          gtag('event','file_download',{event_category:'downloads', event_label: label, file_url: url});
+        }
+      }catch(err){/* swallow */}
+    }
+
+    // Accessibility: keyboard ESC closes banner
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ hideBanner(); } });
+
+  </script>
+
+</body>
+</html>

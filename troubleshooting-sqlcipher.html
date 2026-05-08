@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>Troubleshooting SQLCipher on Windows — Fix “file is not a database”</title>
+  <meta name="description" content="Fix common SQLCipher issues in DB Browser on Windows: 'file is not a database', wrong key, version mismatch (v3 vs v4), kdf_iter, page size, HMAC errors, and integrity checks." />
+  <link rel="canonical" href="https://db-browser.github.io/troubleshooting-sqlcipher.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Troubleshooting SQLCipher on Windows — Fix “file is not a database”">
+  <meta property="og:description" content="Step-by-step fixes for SQLCipher errors in DB Browser: wrong key, version mismatch, kdf_iter/page size, HMAC failures, integrity checks." />
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://db-browser.github.io/troubleshooting-sqlcipher.html">
+  <meta property="og:image" content="https://db-browser.github.io/og-image.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Troubleshooting SQLCipher on Windows — Fix “file is not a database”">
+  <meta name="twitter:description" content="Fix SQLCipher errors in DB Browser for Windows with practical checks and solutions.">
+  <meta name="twitter:image" content="https://db-browser.github.io/og-image.png">
+
+  <meta name="author" content="Community / Unofficial resource">
+  <meta name="last-modified" content="">
+
+  <!-- Inline critical CSS (single <style>) -->
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#0b2545;
+      --muted:#6b7280;
+      --accent:#0b63a5; /* blue similar to official */
+      --accent-2:#f7a21a; /* warm accent */
+      --card:#f8fafc;
+      --radius:10px;
+      --maxwidth:1100px;
+      --focus: 3px solid rgba(11,99,165,0.15);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;font-size:16px;line-height:1.45;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+    a{color:var(--accent)}
+    header{background:linear-gradient(180deg,#ffffff 0%, #f7fbff 100%);border-bottom:1px solid #e6eef6}
+    .wrap{max-width:var(--maxwidth);margin:0 auto;padding:20px}
+    .site-header{display:flex;align-items:center;gap:18px;padding:10px 0}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand h1{font-size:18px;margin:0}
+
+    nav{margin-left:auto}
+    .nav-list{display:flex;gap:12px;flex-wrap:wrap}
+    .nav-list a{padding:8px 12px;border-radius:8px;text-decoration:none;color:var(--text);font-weight:600}
+    .nav-list a[aria-current="page"]{background:#eef6fb;color:var(--accent);border:1px solid #dbeefc}
+    .nav-list a:focus{outline:var(--focus)}
+
+    main{padding:28px 20px}
+    .hero{display:grid;gap:18px;grid-template-columns:1fr;align-items:center}
+    .kicker{color:var(--muted);font-weight:600}
+    .title{font-size:28px;margin:0;color:var(--text)}
+    .lead{color:var(--muted);max-width:72ch}
+
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;border:0;background:var(--accent);color:white;font-weight:700;text-decoration:none;cursor:pointer}
+    .btn.secondary{background:#eef6fb;color:var(--accent);border:1px solid #dbeefc}
+    .btn:focus{outline:var(--focus)}
+
+    .card{background:var(--card);padding:16px;border-radius:var(--radius);box-shadow:0 1px 0 rgba(11,99,165,0.03)}
+
+    .grid-2{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+
+    footer{padding:24px 20px;border-top:1px solid #e6eef6;margin-top:40px}
+    .footer-grid{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+    .muted{color:var(--muted);font-size:14px}
+
+    .note{background:#fff7ed;border:1px solid #ffedd5;color:#7c2d12;padding:10px;border-radius:8px}
+
+    /* cookie banner */
+    .cookie-banner{position:fixed;left:16px;right:16px;bottom:16px;background:linear-gradient(180deg,#fffefe,#f7fbff);padding:12px;border-radius:12px;box-shadow:0 10px 30px rgba(11,99,165,0.08);display:flex;align-items:center;gap:12px;z-index:999}
+    .cookie-text{flex:1}
+
+    /* responsiveness */
+    @media (max-width:999px){
+      .grid-2{grid-template-columns:1fr}
+    }
+    @media (max-width:799px){
+      .nav-list{display:none}
+      .mobile-nav{display:flex;margin-left:auto}
+    }
+
+    a:focus,button:focus{outline-offset:3px}
+    .visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+  </style>
+
+  <!-- Inline SVG symbols -->
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="icon-logo" viewBox="0 0 64 64">
+      <rect x="6" y="14" width="52" height="36" rx="4" fill="currentColor" />
+      <path d="M18 22h28M18 30h28M18 38h16" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+    </symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 13l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 21H3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M7 11V8a5 5 0 0110 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="icon-db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="9" ry="3" stroke="currentColor" stroke-width="2" fill="none"/><path d="M3 6v6c0 1.7 4 3 9 3s9-1.3 9-3V6" stroke="currentColor" stroke-width="2" fill="none"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  </svg>
+
+  <!-- JSON-LD: SoftwareApplication + BreadcrumbList + FAQPage + HowTo -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"SoftwareApplication",
+        "name":"DB Browser (SQLCipher) for Windows (Unofficial)",
+        "description":"Troubleshooting guide to fix SQLCipher errors in DB Browser on Windows, including 'file is not a database' and version mismatches.",
+        "operatingSystem":"Windows 10, Windows 11",
+        "applicationCategory":"DeveloperApplication,Database",
+        "softwareVersion":"3.13.1",
+        "url":"https://db-browser.github.io/troubleshooting-sqlcipher.html",
+        "downloadUrl":"https://github.com/sqlitebrowser/sqlitebrowser/releases/download/v3.13.1/SQLiteDatabaseBrowserPortable_3.13.1.paf.exe",
+        "offers":{
+          "@type":"Offer",
+          "price":"0",
+          "priceCurrency":"USD"
+        },
+        "publisher":{
+          "@type":"Organization",
+          "name":"Community / Unofficial resource",
+          "url":"https://db-browser.github.io/"
+        }
+      },
+      {
+        "@type":"BreadcrumbList",
+        "itemListElement":[
+          {"@type":"ListItem","position":1,"name":"Home","item":"https://db-browser.github.io/"},
+          {"@type":"ListItem","position":2,"name":"Troubleshooting","item":"https://db-browser.github.io/troubleshooting-sqlcipher.html"}
+        ]
+      },
+      {
+        "@type":"FAQPage",
+        "mainEntity":[
+          {"@type":"Question","name":"Why do I see 'file is not a database'?","acceptedAnswer":{"@type":"Answer","text":"Usually because the encryption key is wrong or SQLCipher parameters (version, kdf_iter, page size) don't match the file. Verify the key and open with the same SQLCipher version used to create the DB."}},
+          {"@type":"Question","name":"How do I know if my file is encrypted?","acceptedAnswer":{"@type":"Answer","text":"Encrypted SQLCipher files don't start with the 'SQLite format 3\u0000' header. If the DB opens only after entering a key, it's encrypted. You can also verify in DB Browser by running PRAGMA cipher_version; after opening."}},
+          {"@type":"Question","name":"I entered the correct key but it still fails.","acceptedAnswer":{"@type":"Answer","text":"There may be a SQLCipher version mismatch (e.g., v3 vs v4) or different kdf_iter/page_size. Try opening in the tool that created it, then export/import to migrate to your environment."}},
+          {"@type":"Question","name":"What's the safest way to rekey or migrate?","acceptedAnswer":{"@type":"Answer","text":"Always back up first. Open the DB with the working tool, export to SQL, then import into a new encrypted DB using your desired settings."}}
+        ]
+      },
+      {
+        "@type":"HowTo",
+        "name":"Fix 'file is not a database' when opening an encrypted SQLCipher file",
+        "url":"https://db-browser.github.io/troubleshooting-sqlcipher.html#fix-finedb",
+        "step":[
+          {"@type":"HowToStep","name":"Verify the key","itemListElement":[{"@type":"HowToDirection","text":"Confirm the passphrase and keyboard layout. Try retyping carefully."}]},
+          {"@type":"HowToStep","name":"Confirm SQLCipher version","itemListElement":[{"@type":"HowToDirection","text":"Open the file in the original tool or environment. Note if it uses SQLCipher v3 or v4 and its defaults (kdf_iter, page_size)."}]},
+          {"@type":"HowToStep","name":"Retry with matching parameters","itemListElement":[{"@type":"HowToDirection","text":"If your GUI allows advanced options, match version and parameters. Otherwise, open in the original tool and export/import to migrate."}]},
+          {"@type":"HowToStep","name":"Check integrity","itemListElement":[{"@type":"HowToDirection","text":"After successful open, run PRAGMA cipher_integrity_check; to ensure the DB is healthy."}]}
+        ]
+      }
+    ]
+  }
+  </script>
+
+</head>
+<body>
+  <header>
+    <div class="wrap site-header" role="banner">
+      <div class="brand" aria-label="site brand">
+        <svg width="44" height="44" viewBox="0 0 64 64" fill="var(--accent)"><use href="#icon-logo"></use></svg>
+        <div>
+          <h1 style="font-size:18px;margin:0">DB Browser (SQLCipher) — Windows</h1>
+          <div class="muted" style="font-size:13px">Portable download, guides, troubleshooting</div>
+        </div>
+      </div>
+
+      <nav aria-label="Main Navigation">
+        <div class="nav-list">
+          <a href="download-windows.html">Download</a>
+          <a href="getting-started.html">Getting Started</a>
+          <a href="encrypt-decrypt-sqlcipher.html">Encrypt / Decrypt</a>
+          <a href="troubleshooting-sqlcipher.html" aria-current="page">Troubleshooting</a>
+          <a href="migrate-to-sqlcipher.html">Migrate</a>
+          <a href="best-practices-security.html">Security</a>
+          <a href="alternatives-comparison.html">Alternatives</a>
+        </div>
+      </nav>
+
+      <div class="mobile-nav" style="display:none">
+        <button aria-label="open menu" class="btn secondary" onclick="document.querySelector('.nav-list').style.display='flex'">Menu</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" id="main">
+    <nav aria-label="Breadcrumbs" class="muted" style="margin-bottom:10px;font-size:14px">
+      <a href="index.html">Home</a> › Troubleshooting
+    </nav>
+
+    <section class="hero card" aria-labelledby="hero-title">
+      <div class="grid-2">
+        <div>
+          <div class="kicker">Practical fixes • SQLCipher on Windows</div>
+          <h2 id="hero-title" class="title">Troubleshooting: SQLCipher Errors and Fixes</h2>
+          <p class="lead">Solve common errors in DB Browser (SQLCipher) for Windows: “file is not a database”, wrong key, version mismatches (v3 vs v4), kdf_iter and page size differences, HMAC and integrity check failures.</p>
+          <div class="cta-row" style="margin-top:14px">
+            <a class="btn" href="https://github.com/sqlitebrowser/sqlitebrowser/releases/download/v3.13.1/SQLiteDatabaseBrowserPortable_3.13.1.paf.exe" title="Download Portable EXE"
+               onclick="trackDownload(event,'SQLiteDatabaseBrowserPortable_3.13.1.paf.exe','https://github.com/sqlitebrowser/sqlitebrowser/releases/download/v3.13.1/SQLiteDatabaseBrowserPortable_3.13.1.paf.exe')" rel="noopener noreferrer" target="_blank">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin-right:6px"><use href="#icon-download"></use></svg>
+              Download Portable (v3.13.1)
+            </a>
+            <a class="btn secondary" href="best-practices-security.html">Security best practices</a>
+            <a class="btn secondary" href="migrate-to-sqlcipher.html">Migrate / Convert</a>
+          </div>
+        </div>
+        <aside class="card" style="height:max-content">
+          <div style="display:flex;align-items:center;gap:12px">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent)"><use href="#icon-lock"></use></svg>
+            <div>
+              <strong>Quick checklist</strong>
+              <ul class="muted" style="margin:8px 0;padding-left:18px">
+                <li>Double‑check the passphrase</li>
+                <li>Match SQLCipher version (v3 vs v4)</li>
+                <li>Keep kdf_iter & page size consistent</li>
+                <li>Open in the original tool if unsure</li>
+                <li>Back up before rekey/migration</li>
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="card" id="diagnose" style="margin-top:18px">
+      <h3 style="margin-top:0">Diagnose the problem</h3>
+      <div class="grid-3">
+        <div class="card">
+          <strong>Is the file encrypted?</strong>
+          <p class="muted">Encrypted SQLCipher files do not start with the plain SQLite header. If the DB only opens with a key, it's encrypted. After opening, run <code>PRAGMA cipher_version;</code> to verify encryption support.</p>
+        </div>
+        <div class="card">
+          <strong>Key vs parameters</strong>
+          <p class="muted">A correct key with wrong parameters can fail. Version (v3/v4), kdf_iter, and page size must match how the DB was created.</p>
+        </div>
+        <div class="card">
+          <strong>Source environment</strong>
+          <p class="muted">Open the DB with the original app/tool if possible, then export/import to migrate to your current build.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="file-not-db" style="margin-top:18px">
+      <h3 style="margin-top:0">Fix “file is not a database”</h3>
+      <ol class="muted" style="margin:8px 0;padding-left:18px">
+        <li><strong>Confirm the key</strong> — retype carefully and check keyboard layout and trailing spaces.</li>
+        <li><strong>Match SQLCipher version</strong> — determine if the DB was created with v3 or v4; open with a compatible build.</li>
+        <li><strong>Align parameters</strong> — if advanced options are exposed, match <em>kdf_iter</em> and <em>page_size</em>. Otherwise, open in the original tool and export/import.</li>
+        <li><strong>Test integrity after opening</strong> — run <code>PRAGMA cipher_integrity_check;</code>. If issues persist, export to SQL and re-import.</li>
+      </ol>
+      <div class="note">Still stuck? See <a href="#faq">FAQ</a> below, or jump to <a href="migrate-to-sqlcipher.html">Migrate</a> for safe conversion paths.</div>
+    </section>
+
+    <section class="card" id="other-errors" style="margin-top:18px">
+      <h3 style="margin-top:0">Other common errors</h3>
+      <ul class="muted" style="margin:8px 0;padding-left:18px">
+        <li><strong>Wrong key or HMAC mismatch</strong> — ensure the passphrase is correct; version/parameter mismatches may cause HMAC failures.</li>
+        <li><strong>“database disk image is malformed”</strong> — indicates corruption. If you can open, export to SQL, then import into a fresh DB.</li>
+        <li><strong>“no such table” after opening</strong> — may indicate the DB wasn’t actually decrypted. Verify with <code>PRAGMA cipher_version;</code> and re-open with correct settings.</li>
+        <li><strong>Slow open</strong> — high <em>kdf_iter</em> values increase key derivation time. This is expected for stronger security.</li>
+      </ul>
+    </section>
+
+    <section class="card" id="best-practices" style="margin-top:18px">
+      <h3 style="margin-top:0">Prevent issues</h3>
+      <ul class="muted" style="margin:8px 0;padding-left:18px">
+        <li>Back up before rekeying or migrating.</li>
+        <li>Document SQLCipher version and parameters used for the project.</li>
+        <li>Use long, unique passphrases.</li>
+        <li>Keep your tools updated and consistent across environments.</li>
+      </ul>
+      <div class="cta-row">
+        <a class="btn secondary" href="best-practices-security.html">Security best practices</a>
+        <a class="btn secondary" href="encrypt-decrypt-sqlcipher.html">Encrypt / Decrypt guide</a>
+      </div>
+    </section>
+
+    <section class="card" id="faq" style="margin-top:18px">
+      <h3 style="margin-top:0">FAQ</h3>
+      <details>
+        <summary><strong>How can I tell if a database is encrypted?</strong></summary>
+        <p class="muted">Encrypted files lack the 'SQLite format 3\u0000' header. In practice, if opening requires a key and succeeds only with the right key, it’s encrypted. After opening, verify with <code>PRAGMA cipher_version;</code>.</p>
+      </details>
+      <details>
+        <summary><strong>What’s the difference between SQLCipher v3 and v4?</strong></summary>
+        <p class="muted">They use different defaults (e.g., HMAC, page size, KDF iterations). A DB created with v3 may not open with v4 defaults and vice versa. Use matching settings or migrate via export/import.</p>
+      </details>
+      <details>
+        <summary><strong>I forgot the passphrase. Can I recover my data?</strong></summary>
+        <p class="muted">If the key is lost, SQLCipher encryption cannot be bypassed. Without the correct key and parameters, recovery is not feasible.</p>
+      </details>
+      <details>
+        <summary><strong>After opening, I see garbled data.</strong></summary>
+        <p class="muted">This often indicates decryption didn’t occur (wrong parameters) or corruption. Reopen with correct settings, then export/import to a new DB.</p>
+      </details>
+    </section>
+
+    <div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <div class="muted">Page last modified: <span id="lastModified" class="muted">--</span></div>
+      <div class="muted">|</div>
+      <div class="muted">Canonical: <a href="https://db-browser.github.io/troubleshooting-sqlcipher.html">https://db-browser.github.io/troubleshooting-sqlcipher.html</a></div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="wrap footer-grid">
+      <div class="muted">© Community • Unofficial resource • <a href="https://github.com/sqlitebrowser/sqlitebrowser">Source</a></div>
+      <div style="margin-left:auto" class="muted">Privacy: <a href="#" onclick="openConsent()">Cookie settings</a></div>
+    </div>
+  </footer>
+
+  <!-- Cookie banner (accept / decline / close) -->
+  <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite" style="display:none">
+    <div style="display:flex;align-items:center;gap:12px">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)"><use href="#icon-db"></use></svg>
+    </div>
+    <div class="cookie-text">
+      <strong>We use analytics</strong>
+      <div class="muted">This site uses Google Analytics (GA4) to collect anonymous usage data. Accept to enable analytics. Decline to refuse.</div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" id="acceptCookies">Accept</button>
+      <button class="btn secondary" id="declineCookies">Decline</button>
+      <button class="btn secondary" id="closeBanner" aria-label="Close cookie banner"><svg width="14" height="14" viewBox="0 0 24 24"><use href="#icon-close"></use></svg></button>
+    </div>
+  </div>
+
+  <noscript><div style="padding:12px;background:#fff3cd;color:#856404;text-align:center">JavaScript is required for download tracking and cookie consent. You can still download the file directly.</div></noscript>
+
+  <!-- Inline JS (analytics + consent + small helpers) -->
+  <script>
+    /* Configuration */
+    const GA_MEASUREMENT_ID = 'G-N1MPKLJ6KC';
+    const DOWNLOAD_FILE_NAME = 'SQLiteDatabaseBrowserPortable_3.13.1.paf.exe';
+    const DOWNLOAD_URL = 'https://github.com/sqlitebrowser/sqlitebrowser/releases/download/v3.13.1/SQLiteDatabaseBrowserPortable_3.13.1.paf.exe';
+
+    /* Consent management */
+    const CONSENT_KEY = 'dbbrowser_consent_v1'; // values: accepted, declined, closed
+
+    function setConsent(val){ try{localStorage.setItem(CONSENT_KEY,val)}catch(e){} }
+    function getConsent(){ try{return localStorage.getItem(CONSENT_KEY)}catch(e){return null} }
+
+    function showBanner(){document.getElementById('cookieBanner').style.display='flex'}
+    function hideBanner(){document.getElementById('cookieBanner').style.display='none'}
+
+    document.getElementById('acceptCookies').addEventListener('click',function(){setConsent('accepted');hideBanner();loadGA();});
+    document.getElementById('declineCookies').addEventListener('click',function(){setConsent('declined');hideBanner();});
+    document.getElementById('closeBanner').addEventListener('click',function(){setConsent('closed');hideBanner();});
+
+    function openConsent(){ showBanner(); }
+
+    window.addEventListener('load',function(){
+      // lastModified
+      var lm = document.lastModified || new Date().toISOString();
+      document.querySelector('meta[name="last-modified"]').setAttribute('content', lm);
+      document.getElementById('lastModified').textContent = lm;
+
+      // Consent boot
+      const consent = getConsent();
+      if(!consent){ showBanner(); }
+      if(consent === 'accepted') loadGA();
+    });
+
+    /* Load GA4 dynamically after consent */
+    function loadGA(){
+      if(window.gtag){return}
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments)}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_MEASUREMENT_ID, { 'anonymize_ip': true });
+    }
+
+    /* Safe wrapper for download events */
+    function trackDownload(e, label, url){
+      try{
+        const consent = getConsent();
+        if(consent === 'accepted' && window.gtag){
+          gtag('event','file_download',{event_category:'downloads', event_label: label, file_url: url});
+        }
+      }catch(err){/* swallow */}
+    }
+
+    // Accessibility: keyboard ESC closes banner
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ hideBanner(); } });
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 64 64" role="img" aria-label="DB Browser SQLCipher icon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b63a5"/>
+      <stop offset="100%" stop-color="#0b5791"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect x="2" y="2" width="60" height="60" rx="12" fill="url(#bg)"/>
+
+  <!-- DB cylinder (simple) -->
+  <g transform="translate(0,0)">
+    <ellipse cx="24" cy="22" rx="14" ry="6" fill="#ffffff"/>
+    <rect x="10" y="22" width="28" height="18" fill="#ffffff"/>
+    <ellipse cx="24" cy="40" rx="14" ry="6" fill="#ffffff"/>
+    <ellipse cx="24" cy="22" rx="14" ry="6" fill="none" stroke="#e6eef6" stroke-width="1"/>
+  </g>
+
+  <!-- Lock (SQLCipher hint) -->
+  <g fill="none" stroke="#0b2545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="36" y="36" width="18" height="14" rx="3" fill="#ffffff"/>
+    <path d="M40 36v-3a7 7 0 0 1 14 0v3"/>
+  </g>
+</svg>
