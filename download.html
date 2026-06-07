@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>Download DB Browser (SQLCipher) for Windows — Portable (Secure)</title>
+  <meta name="description" content="Secure, CAPTCHA‑gated download of the portable DB Browser (SQLCipher) for Windows. System requirements, integrity checks, troubleshooting and related guides.">
+  <link rel="canonical" href="https://db-browser.github.io/download.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Download DB Browser (SQLCipher) for Windows — Portable (Secure)">
+  <meta property="og:description" content="CAPTCHA‑gated download. Get the portable Windows build with SQLCipher support, plus integrity tips and quick start guides.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://db-browser.github.io/download.html">
+  <meta property="og:image" content="https://db-browser.github.io/og-image.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Download DB Browser (SQLCipher) for Windows — Portable (Secure)">
+  <meta name="twitter:description" content="CAPTCHA‑gated download. Get the portable Windows build with SQLCipher support, plus integrity tips and quick start guides.">
+  <meta name="twitter:image" content="https://db-browser.github.io/og-image.png">
+
+  <meta name="author" content="Community / Unofficial resource">
+  <meta name="last-modified" content="">
+
+  <!-- Google tag (GA4) + Consent Mode v2: load regardless of consent, default denied -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied',
+      'wait_for_update': 500
+    });
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N1MPKLJ6KC"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-N1MPKLJ6KC', { 'anonymize_ip': true });
+  </script>
+
+  <!-- Styles (palette consistent with index) -->
+  <style>
+    :root{
+      --bg:#ffffff; --text:#0b2545; --muted:#6b7280; --accent:#0b63a5; --accent-2:#f7a21a; --card:#f8fafc;
+      --radius:10px; --maxwidth:1100px; --focus:3px solid rgba(11,99,165,0.15);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;font-size:16px;line-height:1.6;color:var(--text);background:var(--bg)}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    header{background:linear-gradient(180deg,#ffffff 0%, #f7fbff 100%);border-bottom:1px solid #e6eef6}
+    .wrap{max-width:var(--maxwidth);margin:0 auto;padding:20px}
+    .site-header{display:flex;align-items:center;gap:18px;padding:10px 0}
+    .brand{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none}
+    .brand:hover{text-decoration:none}
+    nav{margin-left:auto}
+    .nav-list{display:flex;gap:8px;flex-wrap:wrap}
+    .nav-list a{padding:6px 10px;border-radius:8px;color:var(--text);font-weight:600;font-size:14px;line-height:1}
+    .nav-list a:focus{outline:var(--focus)}
+    main{padding:28px 20px}
+    .card{background:var(--card);padding:16px;border-radius:var(--radius);box-shadow:0 1px 0 rgba(11,99,165,0.03)}
+    .hero{display:grid;gap:18px;grid-template-columns:1.1fr 0.9fr;align-items:stretch}
+    .title{font-size:30px;margin:4px 0 6px;color:var(--text);line-height:1.2}
+    .lead{color:var(--muted);max-width:78ch}
+    .kicker{color:var(--muted);font-weight:600;font-size:13px}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;border:0;background:var(--accent);color:white;font-weight:700;cursor:pointer}
+    .btn.secondary{background:#eef6fb;color:var(--accent);border:1px solid #dbeefc;text-decoration:none}
+    .btn:focus{outline:var(--focus)}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .list{margin:6px 0 0 18px;color:var(--muted)}
+    .muted{color:var(--muted);font-size:14px}
+    footer{padding:24px 20px;border-top:1px solid #e6eef6;margin-top:40px}
+    .footer-grid{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+    .hero-callout{display:flex;flex-direction:column;gap:12px}
+    .check{display:flex;gap:10px;align-items:flex-start;color:var(--muted)}
+    .check svg{color:var(--accent)}
+
+    @media (max-width:899px){.hero{grid-template-columns:1fr}}
+    @media (max-width:699px){.nav-list{display:none}.mobile-nav{display:flex;margin-left:auto}.grid{grid-template-columns:1fr}}
+  </style>
+
+  <!-- SVG icons -->
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="icon-logo" viewBox="0 0 64 64"><rect x="6" y="14" width="52" height="36" rx="4" fill="currentColor" /><path d="M18 22h28M18 30h28M18 38h16" stroke="#fff" stroke-width="2" stroke-linecap="round" /></symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 13l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 21H3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <!-- JSON-LD: SoftwareApplication + Breadcrumbs -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"SoftwareApplication",
+        "name":"DB Browser (SQLCipher) for Windows (Portable)",
+        "description":"Portable Windows build of DB Browser for SQLite with SQLCipher encryption support.",
+        "operatingSystem":"Windows 10, Windows 11",
+        "applicationCategory":"DeveloperApplication,Database",
+        "softwareVersion":"3.13.1",
+        "url":"https://db-browser.github.io/download.html",
+        "downloadUrl":"https://db-browser.github.io/download.html",
+        "isAccessibleForFree": true,
+        "offers": {"@type":"Offer","price":"0","priceCurrency":"USD"},
+        "publisher": {"@type":"Organization","name":"Community / Unofficial resource","url":"https://db-browser.github.io/"},
+        "potentialAction": {"@type":"DownloadAction","target": {"@type":"EntryPoint","urlTemplate": "https://db-browser.github.io/download.html"}}
+      },
+      {
+        "@type":"BreadcrumbList",
+        "itemListElement":[
+          {"@type":"ListItem","position":1,"name":"Home","item":"https://db-browser.github.io/"},
+          {"@type":"ListItem","position":2,"name":"Download","item":"https://db-browser.github.io/download.html"}
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="wrap site-header" role="banner">
+      <a class="brand" aria-label="Home" href="/">
+        <svg width="44" height="44" viewBox="0 0 64 64" fill="var(--accent)"><use href="#icon-logo"></use></svg>
+        <div>
+          <div style="font-size:18px;margin:0;font-weight:700;color:var(--text)">DB Browser (SQLCipher) — Windows</div>
+          <div class="muted" style="font-size:13px">Portable download, guides, troubleshooting</div>
+        </div>
+      </a>
+      <nav aria-label="Main Navigation">
+        <div class="nav-list">
+          <a href="/download.html" aria-current="page">Download</a>
+          <a href="/getting-started.html">Getting Started</a>
+          <a href="/encrypt-decrypt-sqlcipher.html">Encrypt / Decrypt</a>
+          <a href="/troubleshooting.html">Troubleshooting</a>
+          <a href="/migrate-to-sqlcipher.html">Migrate</a>
+          <a href="/best-practices-security.html">Security</a>
+          <a href="/alternatives.html">Alternatives</a>
+          <a href="/faq.html">FAQ</a>
+          <a href="/about.html">About</a>
+        </div>
+      </nav>
+      <div class="mobile-nav" style="display:none">
+        <button aria-label="open menu" class="btn secondary" onclick="document.querySelector('.nav-list').style.display='flex'">Menu</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" id="main">
+    <!-- Hero -->
+    <section class="hero card" aria-labelledby="download-title">
+      <div>
+        <div class="kicker">Secure, CAPTCHA‑gated download</div>
+        <h1 id="download-title" class="title">Download DB Browser (SQLCipher) for Windows — Portable</h1>
+        <p class="lead">This is the only page where downloading is available. Complete a quick CAPTCHA check to unlock the portable build with SQLCipher support for Windows 10/11. No direct download links are exposed in the page source.</p>
+        <div class="cta-row">
+          <button class="btn" type="button" data-captcha-trigger data-captcha-keyword="DBBrowser-SQLCipher-Portable" title="Secure download (CAPTCHA)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin-right:6px"><use href="#icon-download"></use></svg>
+            Secure download — Portable (v3.13.1)
+          </button>
+          <a class="btn secondary" href="/getting-started.html">Installation Guide</a>
+          <a class="btn secondary" href="/sqlcipher.html">Encryption Basics</a>
+        </div>
+        <p class="muted" style="margin-top:10px">After verification, your download will start in a new tab. If the widget fails, see Troubleshooting below.</p>
+      </div>
+
+      <aside class="card hero-callout" aria-label="Highlights">
+        <div class="check"><svg width="18" height="18"><use href="#icon-check"></use></svg><span>Portable: runs without installation</span></div>
+        <div class="check"><svg width="18" height="18"><use href="#icon-check"></use></svg><span>SQLCipher AES‑256 encryption support</span></div>
+        <div class="check"><svg width="18" height="18"><use href="#icon-check"></use></svg><span>Open, view and edit tables, indexes and data</span></div>
+        <div class="check"><svg width="18" height="18"><use href="#icon-check"></use></svg><span>Import/Export CSV and SQL dumps</span></div>
+      </aside>
+    </section>
+
+    <!-- How it works + integrity + requirements -->
+    <section style="margin-top:18px">
+      <div class="grid">
+        <div class="card">
+          <h2 style="margin:0 0 6px 0">How the CAPTCHA gate works</h2>
+          <p class="muted">To reduce automated abuse, downloads are unlocked only after a quick CAPTCHA verification. A separate widget script handles verification and server‑side validation via your TDS, then opens a short‑lived download URL in a new tab.</p>
+          <ul class="list">
+            <li>Click “Secure download — Portable”.</li>
+            <li>Complete the CAPTCHA in the pop‑up.</li>
+            <li>On success, the download starts automatically.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2 style="margin:0 0 6px 0">Verify integrity</h2>
+          <p class="muted">Always verify downloads when possible. Compare file size and checksums against the official release notes.</p>
+          <ul class="list">
+            <li>Check file properties after download (size, signature if available).</li>
+            <li>Verify SHA‑256 when a checksum is provided upstream.</li>
+            <li>Official repository: <a href="https://github.com/sqlitebrowser/sqlitebrowser" target="_blank" rel="noopener nofollow">github.com/sqlitebrowser/sqlitebrowser</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Requirements + help -->
+    <section style="margin-top:18px">
+      <div class="grid">
+        <div class="card">
+          <h2 style="margin:0 0 6px 0">System requirements</h2>
+          <ul class="list">
+            <li>Windows 10 or Windows 11 (64‑bit recommended)</li>
+            <li>Permission to run executables (no admin required for portable)</li>
+            <li>Optional: internet access to check for updates</li>
+          </ul>
+          <div style="margin-top:10px"><a class="btn secondary" href="/getting-started.html">How to run the portable build</a></div>
+        </div>
+        <div class="card">
+          <h2 style="margin:0 0 6px 0">Troubleshooting download & first run</h2>
+          <ul class="list">
+            <li>SmartScreen warning? Click “More info” → “Run anyway” if you trust the source.</li>
+            <li>Problems with encryption? Start with <a href="/open-encrypted-db.html">Open an Encrypted DB</a> and <a href="/sqlcipher.html">SQLCipher basics</a>.</li>
+            <li>Errors like “wrong key”? See <a href="/wrong-key-errors.html">Fix “wrong key”</a> and the <a href="/troubleshooting.html">Troubleshooting hub</a>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Disclaimer -->
+    <section style="margin-top:18px" class="card">
+      <h2 style="margin:0 0 6px 0">Disclaimer</h2>
+      <p class="muted">This is an unofficial resource. DB Browser for SQLite and SQLCipher are maintained by their respective communities. Always verify authenticity on the official repository. Download links are served only after CAPTCHA verification and are not exposed in page source.</p>
+    </section>
+
+    <div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <div class="muted">Page last modified: <span id="lastModified" class="muted">--</span></div>
+      <div class="muted">|</div>
+      <div class="muted">Canonical: <a href="https://db-browser.github.io/download.html">https://db-browser.github.io/download.html</a></div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap footer-grid">
+      <div class="muted">© Community • Unofficial resource • <a href="https://github.com/sqlitebrowser/sqlitebrowser">Source</a></div>
+      <div style="margin-left:auto" class="muted">
+        <a href="/changelog.html">Changelog</a> •
+        <a href="/contact.html">Contact</a> •
+        <a href="#" onclick="openConsent()">Cookie settings</a> •
+        <a href="/privacy.html">Privacy</a> •
+        <a href="/terms.html">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cookie banner (same model as index) -->
+  <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite" style="display:none;position:fixed;left:16px;right:16px;bottom:16px;background:linear-gradient(180deg,#fffefe,#f7fbff);padding:12px;border-radius:12px;box-shadow:0 10px 30px rgba(11,99,165,0.08);display:flex;align-items:center;gap:12px;z-index:999">
+    <div style="display:flex;align-items:center;gap:12px">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)"><use href="#icon-logo"></use></svg>
+    </div>
+    <div class="cookie-text" style="flex:1">
+      <strong>We use analytics</strong>
+      <div class="muted">This site uses Google Analytics (GA4). You can accept or decline analytics cookies at any time in cookie settings.</div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" id="acceptCookies">Accept</button>
+      <button class="btn secondary" id="declineCookies">Decline</button>
+      <button class="btn secondary" id="closeBanner" aria-label="Close cookie banner">Close</button>
+    </div>
+  </div>
+
+  <!-- GA events + consent mode helpers -->
+  <script>
+    // Consent helpers
+    const CONSENT_KEY = 'dbbrowser_consent_v2';
+    function setConsent(val){ try{localStorage.setItem(CONSENT_KEY,val)}catch(e){} }
+    function getConsent(){ try{return localStorage.getItem(CONSENT_KEY)}catch(e){return null} }
+    function showBanner(){document.getElementById('cookieBanner').style.display='flex'}
+    function hideBanner(){document.getElementById('cookieBanner').style.display='none'}
+    document.getElementById('acceptCookies').addEventListener('click',function(){ setConsent('accepted'); try{ gtag('consent','update', { 'analytics_storage': 'granted' }); }catch(e){} hideBanner(); });
+    document.getElementById('declineCookies').addEventListener('click',function(){ setConsent('declined'); try{ gtag('consent','update', { 'analytics_storage': 'denied','ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied' }); }catch(e){} hideBanner(); });
+    document.getElementById('closeBanner').addEventListener('click',function(){ setConsent('closed'); hideBanner(); });
+    function openConsent(){ showBanner(); }
+
+    // Last-modified + consent boot
+    window.addEventListener('load',function(){
+      var lm = document.lastModified || new Date().toISOString();
+      var meta = document.querySelector('meta[name="last-modified"]'); if(meta) meta.setAttribute('content', lm);
+      var el = document.getElementById('lastModified'); if(el) el.textContent = lm;
+      const consent = getConsent();
+      if(!consent){ showBanner(); }
+      if(consent === 'accepted'){
+        try{ gtag('consent','update', { 'analytics_storage': 'granted' }); }catch(e){}
+      }
+    });
+
+    // GA events for CAPTCHA flow (no direct links in markup)
+    document.addEventListener('click', function(e){
+      const btn = e.target.closest('[data-captcha-trigger]');
+      if(btn){
+        const label = btn.getAttribute('data-captcha-keyword') || 'Portable_3.13.1';
+        try{ gtag('event','captcha_open', { event_category:'security', event_label: label }); }catch(err){}
+      }
+    });
+
+    // Listen for widget signals (adapt to your captcha-widget implementation)
+    // Option A: custom DOM events dispatched by captcha-widget
+    document.addEventListener('captcha:solved', function(e){
+      const label = (e.detail && e.detail.keyword) || 'Portable_3.13.1';
+      try{ gtag('event','captcha_solved', { event_category:'security', event_label: label }); }catch(err){}
+    });
+    document.addEventListener('captcha:download', function(e){
+      const label = (e.detail && e.detail.keyword) || 'Portable_3.13.1';
+      try{ gtag('event','file_download', { event_category:'downloads', event_label: label, method:'captcha' }); }catch(err){}
+    });
+
+    // Option B: postMessage protocol from captcha-widget
+    window.addEventListener('message', function(ev){
+      if(!ev || !ev.data) return;
+      if(ev.data.type === 'captcha:solved'){
+        const label = ev.data.keyword || 'Portable_3.13.1';
+        try{ gtag('event','captcha_solved', { event_category:'security', event_label: label }); }catch(err){}
+      }
+      if(ev.data.type === 'captcha:download'){
+        const label = ev.data.keyword || 'Portable_3.13.1';
+        try{ gtag('event','file_download', { event_category:'downloads', event_label: label, method:'captcha' }); }catch(err){}
+      }
+    });
+  </script>
+
+  <!-- reCAPTCHA + captcha-widget (server-side validation + open redirect handled by your widget) -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="captcha-widget.min.js"></script>
+</body>
+</html>

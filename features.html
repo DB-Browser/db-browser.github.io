@@ -5,27 +5,27 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <title>Getting Started with DB Browser (SQLCipher) for Windows — Portable Guide</title>
-  <meta name="description" content="Step‑by‑step guide to run the portable DB Browser (SQLCipher) on Windows. First launch, basic setup, encryption defaults, opening and creating encrypted databases, and essential tips.">
-  <link rel="canonical" href="https://db-browser.github.io/getting-started.html">
+  <title>Features and Capabilities — DB Browser (SQLCipher) for Windows</title>
+  <meta name="description" content="Explore key features of DB Browser for SQLite with SQLCipher on Windows: data browsing and editing, schema design, encryption, CSV import/export, query editor, indexes and performance tips.">
+  <link rel="canonical" href="https://db-browser.github.io/features.html">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Getting Started with DB Browser (SQLCipher) for Windows — Portable Guide">
-  <meta property="og:description" content="Run the portable build, configure SQLCipher settings, open or create encrypted SQLite databases, and import CSV — all step by step.">
+  <meta property="og:title" content="Features and Capabilities — DB Browser (SQLCipher) for Windows">
+  <meta property="og:description" content="Data browsing/editing, schema tools, SQLCipher encryption, CSV import/export, query editor, indexes and performance tips.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://db-browser.github.io/getting-started.html">
+  <meta property="og:url" content="https://db-browser.github.io/features.html">
   <meta property="og:image" content="https://db-browser.github.io/og-image.png">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Getting Started with DB Browser (SQLCipher) for Windows — Portable Guide">
-  <meta name="twitter:description" content="Run the portable build, configure SQLCipher, open or create encrypted databases, and import CSV — step by step.">
+  <meta name="twitter:title" content="Features and Capabilities — DB Browser (SQLCipher) for Windows">
+  <meta name="twitter:description" content="Explore DB Browser with SQLCipher: browse/edit data, design schema, encrypt, import/export CSV, run queries, manage indexes.">
   <meta name="twitter:image" content="https://db-browser.github.io/og-image.png">
 
   <meta name="author" content="Community / Unofficial resource">
   <meta name="last-modified" content="">
 
-  <!-- Google tag (GA4) + Consent Mode v2: load regardless of consent, default denied -->
+  <!-- Google tag (GA4) + Consent Mode v2 -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
@@ -43,7 +43,7 @@
     gtag('config', 'G-N1MPKLJ6KC', { 'anonymize_ip': true });
   </script>
 
-  <!-- Styles (consistent with index) -->
+  <!-- Styles (consistent with site) -->
   <style>
     :root{ --bg:#ffffff; --text:#0b2545; --muted:#6b7280; --accent:#0b63a5; --accent-2:#f7a21a; --card:#f8fafc; --radius:10px; --maxwidth:1100px; --focus:3px solid rgba(11,99,165,0.15); }
     *{box-sizing:border-box}
@@ -71,19 +71,13 @@
     .btn.secondary{background:#eef6fb;color:var(--accent);border:1px solid #dbeefc;text-decoration:none}
     .btn:focus{outline:var(--focus)}
 
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .steps{counter-reset: step}
-    .step{background:#fff;border:1px solid #e6eef6;border-radius:10px;padding:14px;margin:0 0 12px}
-    .step h3{margin:0 0 6px 0;font-size:18px}
-    .step::before{counter-increment: step;content: counter(step);display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:999px;background:var(--accent);color:#fff;font-weight:700;margin-right:8px}
-
     .muted{color:var(--muted);font-size:14px}
-    .tip{display:flex;gap:10px;align-items:flex-start;background:#f0f7ff;border:1px solid #dbeefc;border-radius:10px;padding:10px;margin:10px 0}
+    .list{margin:6px 0 0 18px;color:var(--muted)}
+    .tip{background:#f0f7ff;border:1px solid #dbeefc;border-radius:10px;padding:10px;margin:10px 0}
 
-    footer{padding:24px 20px;border-top:1px solid #e6eef6;margin-top:40px}
-    .footer-grid{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
-
-    @media (max-width:899px){.hero{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}}
+    @media (max-width:899px){.hero{grid-template-columns:1fr}.grid-3{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}}
     @media (max-width:699px){.nav-list{display:none}.mobile-nav{display:flex;margin-left:auto}}
   </style>
 
@@ -93,29 +87,23 @@
     <symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 13l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 21H3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
   </svg>
 
-  <!-- JSON-LD: HowTo + Breadcrumbs -->
+  <!-- JSON-LD: WebPage + Breadcrumbs -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "HowTo",
-        "name": "Getting Started with DB Browser (SQLCipher) — Portable on Windows",
-        "description": "Download, run and configure the portable SQLCipher build. Open or create an encrypted database and import CSV.",
-        "url": "https://db-browser.github.io/getting-started.html",
-        "step": [
-          {"@type": "HowToStep", "name": "Download the portable build", "url": "https://db-browser.github.io/download.html", "text": "Open the Download page and unlock the secure download via CAPTCHA."},
-          {"@type": "HowToStep", "name": "Run the executable", "text": "Launch the portable executable on Windows 10/11. No installation required."},
-          {"@type": "HowToStep", "name": "Configure SQLCipher defaults", "url": "https://db-browser.github.io/sqlcipher.html", "text": "Set cipher parameters and iteration counts appropriate for your environment."},
-          {"@type": "HowToStep", "name": "Open or create an encrypted DB", "url": "https://db-browser.github.io/open-encrypted-db.html", "text": "Open an existing SQLCipher database or create a new encrypted one with a strong passphrase."},
-          {"@type": "HowToStep", "name": "Import CSV (optional)", "url": "https://db-browser.github.io/csv-import-export.html", "text": "Import data from CSV and verify schema and types."}
-        ]
+        "@type": "WebPage",
+        "name": "Features and Capabilities — DB Browser (SQLCipher) for Windows",
+        "url": "https://db-browser.github.io/features.html",
+        "description": "Overview of DB Browser features with SQLCipher on Windows: browse/edit data, schema design, encryption, CSV import/export, queries and indexes.",
+        "inLanguage": "en"
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {"@type":"ListItem", "position": 1, "name": "Home", "item": "https://db-browser.github.io/"},
-          {"@type":"ListItem", "position": 2, "name": "Getting Started", "item": "https://db-browser.github.io/getting-started.html"}
+          {"@type":"ListItem", "position": 2, "name": "Features", "item": "https://db-browser.github.io/features.html"}
         ]
       }
     ]
@@ -135,7 +123,7 @@
       <nav aria-label="Main Navigation">
         <div class="nav-list">
           <a href="/download.html">Download</a>
-          <a href="/getting-started.html" aria-current="page">Getting Started</a>
+          <a href="/getting-started.html">Getting Started</a>
           <a href="/encrypt-decrypt-sqlcipher.html">Encrypt / Decrypt</a>
           <a href="/troubleshooting.html">Troubleshooting</a>
           <a href="/migrate-to-sqlcipher.html">Migrate</a>
@@ -155,70 +143,83 @@
     <!-- Hero -->
     <section class="hero card" aria-labelledby="title">
       <div>
-        <div class="kicker">Portable build • Windows 10/11</div>
-        <h1 id="title" class="title">Getting Started with DB Browser (SQLCipher) for Windows</h1>
-        <p class="lead">Follow this quick start to run the portable build, configure SQLCipher defaults, and open or create your first encrypted SQLite database. No installation required.</p>
+        <div class="kicker">Overview • What it can do • Where to go next</div>
+        <h1 id="title" class="title">Features and Capabilities</h1>
+        <p class="lead">DB Browser for SQLite with SQLCipher on Windows is a lightweight, portable tool to browse, edit and design SQLite databases — with optional strong encryption. Explore the core features below and jump to the guides for deeper workflows.</p>
         <div class="cta-row">
-          <a class="btn" href="/download.html" title="Go to Download">
+          <a class="btn" href="/download.html" title="Get the portable build">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin-right:6px"><use href="#icon-download"></use></svg>
-            Download (Portable)
+            Get the portable build
           </a>
           <a class="btn secondary" href="/sqlcipher.html">Encryption Basics</a>
+          <a class="btn secondary" href="/csv-import-export.html">Import & Export CSV</a>
         </div>
       </div>
-      <aside class="card" aria-label="Tips">
-        <strong>Before you begin</strong>
+      <aside class="card" aria-label="Highlights">
+        <strong>Highlights</strong>
         <ul class="muted" style="padding-left:18px;margin:8px 0 0">
-          <li>Use a strong, unique passphrase for encryption.</li>
-          <li>Note cipher parameters (page size, KDF iterations) for compatibility.</li>
-          <li>Keep secure backups of your databases.</li>
+          <li>Browse and edit data with filters and sorting</li>
+          <li>Design tables, indexes and constraints visually</li>
+          <li>SQLCipher AES‑256 encryption support</li>
         </ul>
       </aside>
     </section>
 
-    <!-- Steps -->
-    <section style="margin-top:18px" class="card">
-      <h2 style="margin:0 0 6px 0">Step‑by‑step</h2>
-      <div class="steps">
-        <div class="step">
-          <h3>Download the portable build</h3>
-          <p class="muted">Go to the <a href="/download.html">Download page</a> and complete the CAPTCHA check to unlock the secure download. The portable build runs without installation.</p>
+    <!-- Feature grid -->
+    <section style="margin-top:18px">
+      <div class="grid-3">
+        <div class="card">
+          <h3 style="margin:0 0 6px 0">Data browsing and editing</h3>
+          <p class="muted">View tables, sort and filter rows, insert/update/delete records directly. Ideal for quick inspections and QA checks.</p>
+          <p class="muted">Tip: keep an audit copy when doing manual edits.</p>
         </div>
-        <div class="step">
-          <h3>Run the executable</h3>
-          <p class="muted">Launch the downloaded executable on Windows 10/11. If SmartScreen appears, click “More info” → “Run anyway” only if you trust the source.</p>
+        <div class="card">
+          <h3 style="margin:0 0 6px 0">SQLCipher encryption</h3>
+          <p class="muted">Create encrypted databases, open existing ones and change passphrases (rekey) with SQLCipher support.</p>
+          <p class="muted">Learn more: <a href="/sqlcipher.html">SQLCipher basics</a> • <a href="/encrypt-decrypt-sqlcipher.html">Encrypt/Decrypt</a></p>
         </div>
-        <div class="step">
-          <h3>Open or create a database</h3>
-          <p class="muted">Use “Open Database” to select an existing file, or “New Database” to create one. For encryption, choose SQLCipher when prompted and enter a strong passphrase.</p>
-          <div class="tip"><span>Need a hand? See <a href="/open-encrypted-db.html">Open an Encrypted DB</a> for parameter guidance and common pitfalls.</span></div>
+        <div class="card">
+          <h3 style="margin:0 0 6px 0">Schema design</h3>
+          <p class="muted">Create and alter tables, columns, indexes and constraints using visual tools. Preview the SQL before applying changes.</p>
         </div>
-        <div class="step">
-          <h3>Set SQLCipher defaults (optional)</h3>
-          <p class="muted">Adjust cipher settings (page size, KDF iterations, HMAC) to match your security/performance targets. Consistency matters when sharing databases across environments.</p>
-          <div class="tip"><span>Read: <a href="/sqlcipher.html">SQLCipher basics</a> and <a href="/performance-tips.html">Performance tips</a>.</span></div>
+        <div class="card">
+          <h3 style="margin:0 0 6px 0">Query editor</h3>
+          <p class="muted">Run SELECT/INSERT/UPDATE/DELETE and analyze results. Save queries for reuse and export outputs to CSV.</p>
+          <p class="muted">See also: <a href="/cli-commands.html">Useful SQL/PRAGMA commands</a></p>
         </div>
-        <div class="step">
-          <h3>Import CSV data (optional)</h3>
-          <p class="muted">Use the Import feature to load CSV into a new or existing table. Verify column types and constraints after import.</p>
-          <div class="tip"><span>Guide: <a href="/csv-import-export.html">Import & Export CSV</a>.</span></div>
+        <div class="card">
+          <h3 style="margin:0 0 6px 0">Import/Export CSV</h3>
+          <p class="muted">Import CSV into new or existing tables with type mapping. Export tables or query results for sharing and analysis.</p>
+          <p class="muted">Guide: <a href="/csv-import-export.html">CSV import/export</a></p>
         </div>
-        <div class="step">
-          <h3>Save and back up</h3>
-          <p class="muted">When finished, save changes and back up the encrypted database. Store passphrases securely in a password manager.</p>
-          <div class="tip"><span>Best practices: <a href="/best-practices-security.html">Security recommendations</a>.</span></div>
+        <div class="card">
+          <h3 style="margin:0 0 6px 0">Indexes and pragmas</h3>
+          <p class="muted">Create indexes to speed up queries and apply practical PRAGMAs to balance integrity and performance.</p>
+          <p class="muted">Read: <a href="/performance-tips.html">Performance tips</a></p>
         </div>
       </div>
     </section>
 
-    <!-- Troubleshooting preview -->
+    <!-- Use cases -->
     <section style="margin-top:18px" class="card">
-      <h2 style="margin:0 0 6px 0">Quick troubleshooting</h2>
-      <ul class="muted" style="padding-left:18px;margin:8px 0 0">
-        <li>Download didn’t start? Return to the <a href="/download.html">Download page</a> and retry the CAPTCHA.</li>
-        <li>“Wrong key” or “file is not a database”? See <a href="/wrong-key-errors.html">Fix “wrong key”</a> and the <a href="/troubleshooting.html">Troubleshooting hub</a>.</li>
-        <li>Performance concerns? Review <a href="/performance-tips.html">Performance tips</a> and PRAGMA guidance.</li>
-      </ul>
+      <h2 style="margin:0 0 6px 0">Use cases</h2>
+      <div class="grid-2">
+        <div>
+          <ul class="list">
+            <li><strong>Developers</strong>: inspect schema, verify migrations, test encryption settings.</li>
+            <li><strong>Analysts</strong>: browse data, build quick queries, export CSV for reports.</li>
+            <li><strong>QA/Support</strong>: reproduce issues, review records, anonymize and share samples.</li>
+          </ul>
+        </div>
+        <div>
+          <ul class="list">
+            <li><strong>Education</strong>: teach SQL/SQLite with a visual interface.</li>
+            <li><strong>Migrations</strong>: move between apps by exporting and importing CSV/SQL.</li>
+            <li><strong>Security</strong>: manage encrypted datasets with documented parameters.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tip">New here? Start with <a href="/getting-started.html">Getting Started</a>, then explore <a href="/sqlcipher.html">SQLCipher basics</a> and <a href="/csv-import-export.html">CSV import/export</a>.</div>
     </section>
 
     <!-- Next steps -->
@@ -227,15 +228,15 @@
       <div class="grid-2">
         <div>
           <ul class="muted" style="padding-left:18px;margin:8px 0 0">
-            <li><a href="/sqlcipher.html">Understand SQLCipher parameters</a></li>
-            <li><a href="/open-encrypted-db.html">Open an encrypted database</a></li>
-            <li><a href="/csv-import-export.html">Import and export CSV</a></li>
+            <li><a href="/sqlcipher.html">SQLCipher basics</a></li>
+            <li><a href="/encrypt-decrypt-sqlcipher.html">Encrypt/Decrypt guide</a></li>
+            <li><a href="/open-encrypted-db.html">Open an Encrypted DB</a></li>
           </ul>
         </div>
         <div>
           <ul class="muted" style="padding-left:18px;margin:8px 0 0">
-            <li><a href="/best-practices-security.html">Security best practices</a></li>
-            <li><a href="/troubleshooting.html">Troubleshooting hub</a></li>
+            <li><a href="/csv-import-export.html">Import & export CSV</a></li>
+            <li><a href="/performance-tips.html">Performance tips</a></li>
             <li><a href="/download.html">Get the portable build</a></li>
           </ul>
         </div>
@@ -245,7 +246,7 @@
     <div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
       <div class="muted">Page last modified: <span id="lastModified" class="muted">--</span></div>
       <div class="muted">|</div>
-      <div class="muted">Canonical: <a href="https://db-browser.github.io/getting-started.html">https://db-browser.github.io/getting-started.html</a></div>
+      <div class="muted">Canonical: <a href="https://db-browser.github.io/features.html">https://db-browser.github.io/features.html</a></div>
     </div>
   </main>
 
@@ -280,7 +281,7 @@
 
   <!-- Inline JS: consent + small helpers -->
   <script>
-    // Consent helpers (same model across site)
+    // Consent helpers
     const CONSENT_KEY = 'dbbrowser_consent_v2';
     function setConsent(val){ try{localStorage.setItem(CONSENT_KEY,val)}catch(e){} }
     function getConsent(){ try{return localStorage.getItem(CONSENT_KEY)}catch(e){return null} }

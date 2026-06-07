@@ -2,50 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://db-browser.github.io/</loc>
-    <lastmod>2026-05-08T00:33:04+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-06-07</lastmod>
   </url>
   <url>
-    <loc>https://db-browser.github.io/download-windows.html</loc>
-    <lastmod>2026-05-08T00:33:04+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://db-browser.github.io/download.html</loc>
+    <lastmod>2026-06-07</lastmod>
   </url>
   <url>
     <loc>https://db-browser.github.io/getting-started.html</loc>
-    <lastmod>2026-05-08T00:33:04+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-06-07</lastmod>
+  </url>
+  <url>
+    <loc>https://db-browser.github.io/sqlcipher.html</loc>
+    <lastmod>2026-06-07</lastmod>
   </url>
   <url>
     <loc>https://db-browser.github.io/encrypt-decrypt-sqlcipher.html</loc>
-    <lastmod>2026-05-08T00:33:04+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-06-07</lastmod>
   </url>
   <url>
-    <loc>https://db-browser.github.io/troubleshooting-sqlcipher.html</loc>
-    <lastmod>2026-05-08T00:33:04+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://db-browser.github.io/troubleshooting.html</loc>
+    <lastmod>2026-06-07</lastmod>
   </url>
   <url>
-    <loc>https://db-browser.github.io/migrate-to-sqlcipher.html</loc>
-    <lastmod>2026-05-08T00:33:04+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://db-browser.github.io/wrong-key-errors.html</loc>
+    <lastmod>2026-06-07</lastmod>
+  </url>
+  <url>
+    <loc>https://db-browser.github.io/open-encrypted-db.html</loc>
+    <lastmod>2026-06-07</lastmod>
+  </url>
+  <url>
+    <loc>https://db-browser.github.io/csv-import-export.html</loc>
+    <lastmod>2026-06-07</lastmod>
+  </url>
+  <url>
+    <loc>https://db-browser.github.io/features.html</loc>
+    <lastmod>2026-06-07</lastmod>
+  </url>
+  <url>
+    <loc>https://db-browser.github.io/performance-tips.html</loc>
+    <lastmod>2026-06-07</lastmod>
+  </url>
+  <url>
+    <loc>https://db-browser.github.io/cli-commands.html</loc>
+    <lastmod>2026-06-07</lastmod>
   </url>
   <url>
     <loc>https://db-browser.github.io/best-practices-security.html</loc>
-    <lastmod>2026-05-08T00:33:04+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <lastmod>2026-06-07</lastmod>
   </url>
   <url>
-    <loc>https://db-browser.github.io/alternatives-comparison.html</loc>
-    <lastmod>2026-05-08T00:33:04+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://db-browser.github.io/migrate-to-sqlcipher.html</loc>
+    <lastmod>2026-06-07</lastmod>
+  </url>
+  <url>
+    <loc>https://db-browser.github.io/alternatives.html</loc>
+    <lastmod>2026-06-07</lastmod>
+  </url>
+  <url>
+    <loc>https://db-browser.github.io/faq.html</loc>
+    <lastmod>2026-06-07</lastmod>
+  </url>
+  <url>
+    <loc>https://db-browser.github.io/about.html</loc>
+    <lastmod>2026-06-07</lastmod>
+  </url>
+  <url>
+    <loc>https://db-browser.github.io/contact.html</loc>
+    <lastmod>2026-06-07</lastmod>
+  </url>
+  <url>
+    <loc>https://db-browser.github.io/privacy.html</loc>
+    <lastmod>2026-06-07</lastmod>
+  </url>
+  <url>
+    <loc>https://db-browser.github.io/terms.html</loc>
+    <lastmod>2026-06-07</lastmod>
+  </url>
+  <url>
+    <loc>https://db-browser.github.io/changelog.html</loc>
+    <lastmod>2026-06-07</lastmod>
   </url>
 </urlset>

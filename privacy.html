@@ -5,21 +5,21 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <title>Migrate to SQLCipher — DB Browser (SQLCipher) for Windows</title>
-  <meta name="description" content="Step‑by‑step migration from plain SQLite to SQLCipher using the portable DB Browser build for Windows. Backups, parameters, import/verify, and common pitfalls.">
-  <link rel="canonical" href="https://db-browser.github.io/migrate-to-sqlcipher.html">
+  <title>Privacy Policy — DB Browser (SQLCipher) for Windows</title>
+  <meta name="description" content="Privacy Policy for this unofficial Windows resource. GA4 with Consent Mode v2 (analytics optional), cookie settings, CAPTCHA gate, what we collect and how to contact us.">
+  <link rel="canonical" href="https://db-browser.github.io/privacy.html">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Migrate to SQLCipher — DB Browser (SQLCipher) for Windows">
-  <meta property="og:description" content="Safe, consistent migration from plain SQLite to SQLCipher. Checklist, How‑To steps, and troubleshooting for Windows portable build.">
+  <meta property="og:title" content="Privacy Policy — DB Browser (SQLCipher) for Windows">
+  <meta property="og:description" content="Learn how we use analytics with Consent Mode v2, cookie preferences, and CAPTCHA to protect downloads. Your choices and how to contact us.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://db-browser.github.io/migrate-to-sqlcipher.html">
+  <meta property="og:url" content="https://db-browser.github.io/privacy.html">
   <meta property="og:image" content="https://db-browser.github.io/og-image.png">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Migrate to SQLCipher — DB Browser (SQLCipher) for Windows">
-  <meta name="twitter:description" content="Step‑by‑step migration from plain SQLite to SQLCipher (Windows, portable). Verify, standardize, and avoid common errors.">
+  <meta name="twitter:title" content="Privacy Policy — DB Browser (SQLCipher) for Windows">
+  <meta name="twitter:description" content="Analytics with consent, cookie settings, and CAPTCHA security. Read our Privacy Policy.">
   <meta name="twitter:image" content="https://db-browser.github.io/og-image.png">
 
   <meta name="author" content="Community / Unofficial resource">
@@ -83,12 +83,6 @@
     .btn:focus{outline:var(--focus)}
 
     .card{background:var(--card);padding:16px;border-radius:var(--radius);box-shadow:0 1px 0 rgba(11,99,165,0.03)}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    .feature{padding:14px}
-
-    .hero-callout{display:flex;flex-direction:column;gap:12px}
-    .check{display:flex;gap:10px;align-items:flex-start;color:var(--muted)}
-    .check svg{color:var(--accent)}
 
     footer{padding:24px 20px;border-top:1px solid #e6eef6;margin-top:40px}
     .footer-grid{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
@@ -97,19 +91,6 @@
     /* cookie banner */
     .cookie-banner{position:fixed;left:16px;right:16px;bottom:16px;background:linear-gradient(180deg,#fffefe,#f7fbff);padding:12px;border-radius:12px;box-shadow:0 10px 30px rgba(11,99,165,0.08);display:flex;align-items:center;gap:12px;z-index:999}
     .cookie-text{flex:1}
-
-    /* responsive */
-    @media (min-width:900px){
-      .hero{grid-template-columns:1.1fr 0.9fr}
-    }
-    @media (min-width:700px){
-      .grid{grid-template-columns:repeat(3,1fr)}
-    }
-    @media (max-width:699px){
-      .nav-list{display:none}
-      .mobile-nav{display:flex;margin-left:auto}
-      .grid{grid-template-columns:1fr}
-    }
 
     a:focus,button:focus{outline-offset:3px}
     .visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
@@ -128,7 +109,7 @@
     <symbol id="icon-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   </svg>
 
-  <!-- JSON-LD: BreadcrumbList + HowTo (no direct file URLs) -->
+  <!-- JSON-LD: BreadcrumbList + PrivacyPolicy -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -137,21 +118,14 @@
         "@type":"BreadcrumbList",
         "itemListElement":[
           {"@type":"ListItem","position":1,"name":"Home","item":"https://db-browser.github.io/"},
-          {"@type":"ListItem","position":2,"name":"Migrate to SQLCipher","item":"https://db-browser.github.io/migrate-to-sqlcipher.html"}
+          {"@type":"ListItem","position":2,"name":"Privacy","item":"https://db-browser.github.io/privacy.html"}
         ]
       },
       {
-        "@type":"HowTo",
-        "name":"Migrate an existing SQLite database to SQLCipher",
-        "description":"Safe migration from plain SQLite to SQLCipher using the portable DB Browser build (Windows).",
-        "mainEntityOfPage":"https://db-browser.github.io/migrate-to-sqlcipher.html",
-        "step":[
-          {"@type":"HowToStep","name":"Back up your database","text":"Create a copy of the original file and (optionally) verify its SHA‑256 hash."},
-          {"@type":"HowToStep","name":"Create a new encrypted DB","text":"Use DB Browser to create a new encrypted database with your standard parameters and a strong passphrase."},
-          {"@type":"HowToStep","name":"Align SQLCipher parameters","text":"Confirm page size, KDF and HMAC settings match your standard. Adjust PRAGMAs if needed and reopen."},
-          {"@type":"HowToStep","name":"Import schema and data","text":"Import tables and data from the original DB; for large datasets prefer CSV import in chunks."},
-          {"@type":"HowToStep","name":"Verify and swap","text":"Reopen with the same key to verify; then replace the old file in production and keep backups safe."}
-        ]
+        "@type":"PrivacyPolicy",
+        "name":"Privacy Policy — DB Browser (SQLCipher) for Windows",
+        "url":"https://db-browser.github.io/privacy.html",
+        "inLanguage":"en"
       }
     ]
   }
@@ -192,102 +166,85 @@
   <main class="wrap" id="main">
     <!-- Hero -->
     <section class="hero card" aria-labelledby="hero-title">
-      <!-- Left: main pitch -->
       <div>
-        <div class="kicker">Official‑style build • Portable Windows EXE</div>
-        <h1 id="hero-title" class="title">Migrate SQLite databases to SQLCipher — Step‑by‑Step</h1>
-        <p class="lead">Follow a safe, consistent process to migrate from plain SQLite to SQLCipher using the portable Windows build of DB Browser. Standardize parameters, import data reliably, verify integrity, and avoid “wrong key” or performance regressions.</p>
+        <div class="kicker">Transparency & control</div>
+        <h1 id="hero-title" class="title">Privacy Policy</h1>
+        <p class="lead">We keep analytics optional and behind consent. Downloads are protected by a CAPTCHA gate. This page explains what we collect, how we use it, and how you can control your data choices.</p>
         <div class="cta-row">
-          <a class="btn" href="/download.html" title="Download Portable EXE">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin-right:6px"><use href="#icon-download"></use></svg> Download (Portable)
-          </a>
-          <a class="btn secondary" href="/sqlcipher.html">SQLCipher basics</a>
-          <a class="btn secondary" href="/open-encrypted-db.html">Open an Encrypted DB</a>
+          <a class="btn" href="#" onclick="openConsent()">Open cookie settings</a>
+          <a class="btn secondary" href="/terms.html">Read Terms of Use</a>
         </div>
-        <p class="muted" style="margin-top:12px">All downloads are consolidated on the <a href="/download.html">Download page</a> and protected by a CAPTCHA gate. No direct file links are exposed on this site.</p>
       </div>
-
-      <!-- Right: highlights -->
-      <aside class="card hero-callout" aria-label="Quick checklist">
-        <div style="display:flex;align-items:center;gap:12px">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent)"><use href="#icon-lock"></use></svg>
-          <div>
-            <strong>Quick checklist</strong>
-            <div class="muted" style="font-size:13px">Backups first, then standardize and verify.</div>
-          </div>
-        </div>
-        <div class="check"><svg width="18" height="18"><use href="#icon-check"></use></svg><span>Make a backup and (optionally) verify its hash</span></div>
-        <div class="check"><svg width="18" height="18"><use href="#icon-check"></use></svg><span>Decide on standard cipher parameters (page size, KDF, HMAC)</span></div>
-        <div class="check"><svg width="18" height="18"><use href="#icon-check"></use></svg><span>Create a new encrypted DB with those parameters</span></div>
-        <div class="check"><svg width="18" height="18"><use href="#icon-check"></use></svg><span>Import schema/data and reopen to verify integrity</span></div>
-        <div class="check"><svg width="18" height="18"><use href="#icon-check"></use></svg><span>Swap in production; keep backups and passphrases safe</span></div>
-      </aside>
     </section>
 
-    <!-- Before you start -->
+    <!-- Overview -->
     <section style="margin-top:18px" class="card">
-      <h2 style="margin:0 0 6px 0">Before you start</h2>
+      <h2 style="margin:0 0 6px 0">Overview</h2>
+      <p class="muted">This is an unofficial community resource focused on a Windows portable build of DB Browser with SQLCipher support. We do not expose direct file links on this site; downloads go through a CAPTCHA gate for safety. We use Google Analytics (GA4) with Consent Mode v2; by default analytics storage is denied until you accept in the cookie banner.</p>
+    </section>
+
+    <!-- Analytics -->
+    <section style="margin-top:18px" class="card">
+      <h2 style="margin:0 0 6px 0">Analytics (GA4) with Consent Mode v2</h2>
       <ul class="muted" style="margin:6px 0 0 16px">
-        <li>Back up the original database (e.g., <code>data.bak.sqlite</code>) and keep it offline.</li>
-        <li>Optionally compute and store a checksum (SHA‑256) to verify backup integrity.</li>
-        <li>Standardize the SQLCipher parameters your team will use across databases.</li>
-        <li>Download and extract the portable build → <a href="/download.html">Download</a>. Run it once to clear SmartScreen/AV prompts.</li>
+        <li>We load GA4 but set analytics_storage to <em>denied</em> by default. When you click <strong>Accept</strong> in the banner, we update consent to <em>granted</em>.</li>
+        <li>We enable IP anonymization in GA (<code>anonymize_ip: true</code>).</li>
+        <li>We use GA primarily to understand basic usage patterns (e.g., page views, clicks on non-file CTAs like the Download page), improve content and navigation.</li>
+        <li>You can change your choice anytime via <a href="#" onclick="openConsent()">Cookie settings</a>.</li>
       </ul>
     </section>
 
-    <!-- Migration steps -->
+    <!-- Cookies & local storage -->
     <section style="margin-top:18px" class="card">
-      <h2 style="margin:0 0 6px 0">Migration steps</h2>
-      <ol class="muted" style="margin:6px 0 0 16px">
-        <li style="margin-bottom:8px"><strong>Create a new encrypted database</strong> — In DB Browser choose <em>File → New Database…</em>, set a strong passphrase, and confirm cipher parameters before saving.</li>
-        <li style="margin-bottom:8px"><strong>Align SQLCipher parameters</strong> — Reopen and confirm <em>page size</em>, <em>KDF</em> and <em>HMAC</em> settings match your standard. Adjust via <a href="/cli-commands.html">PRAGMA commands</a> if needed.</li>
-        <li style="margin-bottom:8px"><strong>Import schema and data</strong> — For small DBs, export SQL and execute on the new DB. For large datasets consider chunked <a href="/csv-import-export.html">CSV import</a>.</li>
-        <li style="margin-bottom:8px"><strong>Verify integrity</strong> — Close and reopen with the same key; browse tables, compare row counts, and run integrity checks.</li>
-        <li><strong>Swap in production</strong> — Replace the old file once verified. Retain backups and update apps to use the correct passphrase and parameters.</li>
-      </ol>
-      <p class="muted" style="margin-top:8px">If you encounter a “wrong key” error, see <a href="/wrong-key-errors.html">Wrong key errors</a> and revisit <a href="/sqlcipher.html">SQLCipher basics</a> — it usually indicates a parameter mismatch.</p>
-    </section>
-
-    <!-- Troubleshooting & pitfalls -->
-    <section style="margin-top:18px" class="card">
-      <h2 style="margin:0 0 6px 0">Troubleshooting & common pitfalls</h2>
+      <h2 style="margin:0 0 6px 0">Cookies and local storage</h2>
       <ul class="muted" style="margin:6px 0 0 16px">
-        <li><strong>“file is not a database”</strong> — Make sure you opened the main <code>.sqlite</code> file (not WAL/SHM).</li>
-        <li><strong>“wrong key”</strong> — Ensure page size, KDF and HMAC settings match the database; confirm passphrase; see <a href="/wrong-key-errors.html">Wrong key guide</a>.</li>
-        <li><strong>Performance regressions</strong> — Review <a href="/performance-tips.html">PRAGMAs</a>, run <em>VACUUM</em>/<em>ANALYZE</em> post‑import, and consider indices.</li>
-        <li><strong>SmartScreen/AV</strong> — Unblock in file properties or whitelist the portable EXE after first run.</li>
-        <li><strong>Backups & rotation</strong> — Keep encrypted backups safe; rotate passphrases periodically following <a href="/best-practices-security.html">security best practices</a>.</li>
+        <li>We store your cookie preference (accepted/declined/closed) in <em>localStorage</em> to remember your choice.</li>
+        <li>GA cookies are only used if you accept analytics in the banner.</li>
+        <li>We do not set marketing/advertising cookies on this site.</li>
       </ul>
     </section>
 
-    <!-- Next steps -->
-    <section style="margin-top:18px">
-      <div class="grid">
-        <div class="card feature">
-          <strong>Encrypt / Decrypt</strong>
-          <p class="muted">Create encrypted DBs, rotate passphrases, and decrypt safely during migrations.</p>
-          <a class="btn secondary" href="/encrypt-decrypt-sqlcipher.html" style="margin-top:8px">How to Encrypt</a>
-        </div>
-        <div class="card feature">
-          <strong>Open encrypted DB</strong>
-          <p class="muted">Pick the right parameters to open existing SQLCipher databases without errors.</p>
-          <a class="btn secondary" href="/open-encrypted-db.html" style="margin-top:8px">Open DB Guide</a>
-        </div>
-        <div class="card feature">
-          <strong>Get the portable build</strong>
-          <p class="muted">All downloads go through a CAPTCHA gate for safety — no direct links exposed.</p>
-          <a class="btn" href="/download.html" style="margin-top:8px">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin-right:6px"><use href="#icon-download"></use></svg>
-            Download (Portable)
-          </a>
-        </div>
-      </div>
+    <!-- CAPTCHA -->
+    <section style="margin-top:18px" class="card">
+      <h2 style="margin:0 0 6px 0">CAPTCHA and secure downloads</h2>
+      <p class="muted">The Download page uses a CAPTCHA gate (e.g., Google reCAPTCHA) integrated via a widget script to reduce automated scraping. The widget provider may process technical data (such as IP address and user agent) to perform verification. We do not expose the direct file URL in page markup; the widget opens the download only after successful verification.</p>
+      <p class="muted">If you prefer not to solve a CAPTCHA, you can explore official sources listed on the <a href="/alternatives.html">Alternatives</a> page.</p>
+    </section>
+
+    <!-- Data retention -->
+    <section style="margin-top:18px" class="card">
+      <h2 style="margin:0 0 6px 0">Data retention</h2>
+      <ul class="muted" style="margin:6px 0 0 16px">
+        <li>Analytics data is retained in GA according to GA account settings.</li>
+        <li>Cookie/consent choices stored in your browser can be cleared anytime by deleting site data or using the <a href="#" onclick="openConsent()">Cookie settings</a>.</li>
+      </ul>
+    </section>
+
+    <!-- Your choices -->
+    <section style="margin-top:18px" class="card">
+      <h2 style="margin:0 0 6px 0">Your choices</h2>
+      <ul class="muted" style="margin:6px 0 0 16px">
+        <li>Accept or decline analytics cookies in the cookie banner or via <a href="#" onclick="openConsent()">Cookie settings</a>.</li>
+        <li>Use your browser’s privacy controls to block or delete cookies and site data.</li>
+      </ul>
+    </section>
+
+    <!-- Contact -->
+    <section style="margin-top:18px" class="card">
+      <h2 style="margin:0 0 6px 0">Contact</h2>
+      <p class="muted">Questions about this policy? Please use the <a href="/contact.html">Contact</a> page and include your browser/OS and a brief description of your request.</p>
+    </section>
+
+    <!-- Changes -->
+    <section style="margin-top:18px" class="card">
+      <h2 style="margin:0 0 6px 0">Changes to this policy</h2>
+      <p class="muted">We may update this Privacy Policy from time to time. The “Page last modified” date below reflects the latest change.</p>
     </section>
 
     <div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
       <div class="muted">Page last modified: <span id="lastModified" class="muted">--</span></div>
       <div class="muted">|</div>
-      <div class="muted">Canonical: <a href="https://db-browser.github.io/migrate-to-sqlcipher.html">https://db-browser.github.io/migrate-to-sqlcipher.html</a></div>
+      <div class="muted">Canonical: <a href="https://db-browser.github.io/privacy.html">https://db-browser.github.io/privacy.html</a></div>
     </div>
 
   </main>
@@ -299,7 +256,7 @@
         <a href="/changelog.html">Changelog</a> •
         <a href="/contact.html">Contact</a> •
         <a href="#" onclick="openConsent()">Cookie settings</a> •
-        <a href="/privacy.html">Privacy</a> •
+        <a href="/privacy.html" aria-current="page">Privacy</a> •
         <a href="/terms.html">Terms</a>
       </div>
     </div>
@@ -323,7 +280,7 @@
 
   <noscript><div style="padding:12px;background:#fff3cd;color:#856404;text-align:center">JavaScript is required for cookie consent. You can still navigate the site.</div></noscript>
 
-  <!-- Inline JS: consent + small helpers (same logic as your sample) -->
+  <!-- Inline JS: consent + last modified (same as sample) -->
   <script>
     /* Configuration */
     const CONSENT_KEY = 'dbbrowser_consent_v2'; // values: accepted, declined, closed

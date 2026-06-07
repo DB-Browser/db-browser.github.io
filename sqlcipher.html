@@ -5,21 +5,21 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <title>Getting Started with DB Browser (SQLCipher) for Windows — Portable Guide</title>
-  <meta name="description" content="Step‑by‑step guide to run the portable DB Browser (SQLCipher) on Windows. First launch, basic setup, encryption defaults, opening and creating encrypted databases, and essential tips.">
-  <link rel="canonical" href="https://db-browser.github.io/getting-started.html">
+  <title>SQLCipher Encryption in DB Browser — Basics, Compatibility and Best Practices</title>
+  <meta name="description" content="Understand SQLCipher in DB Browser: encryption basics, key derivation, compatibility settings, recommended defaults, performance considerations and common pitfalls on Windows.">
+  <link rel="canonical" href="https://db-browser.github.io/sqlcipher.html">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Getting Started with DB Browser (SQLCipher) for Windows — Portable Guide">
-  <meta property="og:description" content="Run the portable build, configure SQLCipher settings, open or create encrypted SQLite databases, and import CSV — all step by step.">
+  <meta property="og:title" content="SQLCipher Encryption in DB Browser — Basics, Compatibility and Best Practices">
+  <meta property="og:description" content="Encryption fundamentals, compatibility settings, recommended defaults and performance tips for SQLCipher in DB Browser on Windows.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://db-browser.github.io/getting-started.html">
+  <meta property="og:url" content="https://db-browser.github.io/sqlcipher.html">
   <meta property="og:image" content="https://db-browser.github.io/og-image.png">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Getting Started with DB Browser (SQLCipher) for Windows — Portable Guide">
-  <meta name="twitter:description" content="Run the portable build, configure SQLCipher, open or create encrypted databases, and import CSV — step by step.">
+  <meta name="twitter:title" content="SQLCipher Encryption in DB Browser — Basics, Compatibility and Best Practices">
+  <meta name="twitter:description" content="Encryption fundamentals, compatibility settings, recommended defaults and performance tips for SQLCipher in DB Browser on Windows.">
   <meta name="twitter:image" content="https://db-browser.github.io/og-image.png">
 
   <meta name="author" content="Community / Unofficial resource">
@@ -43,7 +43,7 @@
     gtag('config', 'G-N1MPKLJ6KC', { 'anonymize_ip': true });
   </script>
 
-  <!-- Styles (consistent with index) -->
+  <!-- Styles (consistent with site) -->
   <style>
     :root{ --bg:#ffffff; --text:#0b2545; --muted:#6b7280; --accent:#0b63a5; --accent-2:#f7a21a; --card:#f8fafc; --radius:10px; --maxwidth:1100px; --focus:3px solid rgba(11,99,165,0.15); }
     *{box-sizing:border-box}
@@ -72,13 +72,10 @@
     .btn:focus{outline:var(--focus)}
 
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .steps{counter-reset: step}
-    .step{background:#fff;border:1px solid #e6eef6;border-radius:10px;padding:14px;margin:0 0 12px}
-    .step h3{margin:0 0 6px 0;font-size:18px}
-    .step::before{counter-increment: step;content: counter(step);display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:999px;background:var(--accent);color:#fff;font-weight:700;margin-right:8px}
-
     .muted{color:var(--muted);font-size:14px}
-    .tip{display:flex;gap:10px;align-items:flex-start;background:#f0f7ff;border:1px solid #dbeefc;border-radius:10px;padding:10px;margin:10px 0}
+    .list{margin:6px 0 0 18px;color:var(--muted)}
+    .note{background:#fff7e6;border:1px solid #ffe0a3;border-radius:10px;padding:10px;margin:10px 0;color:#8b5e00}
+    .tip{background:#f0f7ff;border:1px solid #dbeefc;border-radius:10px;padding:10px;margin:10px 0}
 
     footer{padding:24px 20px;border-top:1px solid #e6eef6;margin-top:40px}
     .footer-grid{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
@@ -93,29 +90,24 @@
     <symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 13l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 21H3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
   </svg>
 
-  <!-- JSON-LD: HowTo + Breadcrumbs -->
+  <!-- JSON-LD: Article + Breadcrumbs -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "HowTo",
-        "name": "Getting Started with DB Browser (SQLCipher) — Portable on Windows",
-        "description": "Download, run and configure the portable SQLCipher build. Open or create an encrypted database and import CSV.",
-        "url": "https://db-browser.github.io/getting-started.html",
-        "step": [
-          {"@type": "HowToStep", "name": "Download the portable build", "url": "https://db-browser.github.io/download.html", "text": "Open the Download page and unlock the secure download via CAPTCHA."},
-          {"@type": "HowToStep", "name": "Run the executable", "text": "Launch the portable executable on Windows 10/11. No installation required."},
-          {"@type": "HowToStep", "name": "Configure SQLCipher defaults", "url": "https://db-browser.github.io/sqlcipher.html", "text": "Set cipher parameters and iteration counts appropriate for your environment."},
-          {"@type": "HowToStep", "name": "Open or create an encrypted DB", "url": "https://db-browser.github.io/open-encrypted-db.html", "text": "Open an existing SQLCipher database or create a new encrypted one with a strong passphrase."},
-          {"@type": "HowToStep", "name": "Import CSV (optional)", "url": "https://db-browser.github.io/csv-import-export.html", "text": "Import data from CSV and verify schema and types."}
-        ]
+        "@type": "Article",
+        "headline": "SQLCipher Encryption in DB Browser — Basics and Compatibility",
+        "description": "Encryption fundamentals, compatibility settings, recommended defaults and performance tips for SQLCipher in DB Browser on Windows.",
+        "mainEntityOfPage": {"@type": "WebPage", "@id": "https://db-browser.github.io/sqlcipher.html"},
+        "author": {"@type": "Organization", "name": "Community / Unofficial resource"},
+        "inLanguage": "en"
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {"@type":"ListItem", "position": 1, "name": "Home", "item": "https://db-browser.github.io/"},
-          {"@type":"ListItem", "position": 2, "name": "Getting Started", "item": "https://db-browser.github.io/getting-started.html"}
+          {"@type":"ListItem", "position": 2, "name": "SQLCipher", "item": "https://db-browser.github.io/sqlcipher.html"}
         ]
       }
     ]
@@ -135,7 +127,7 @@
       <nav aria-label="Main Navigation">
         <div class="nav-list">
           <a href="/download.html">Download</a>
-          <a href="/getting-started.html" aria-current="page">Getting Started</a>
+          <a href="/getting-started.html">Getting Started</a>
           <a href="/encrypt-decrypt-sqlcipher.html">Encrypt / Decrypt</a>
           <a href="/troubleshooting.html">Troubleshooting</a>
           <a href="/migrate-to-sqlcipher.html">Migrate</a>
@@ -155,70 +147,88 @@
     <!-- Hero -->
     <section class="hero card" aria-labelledby="title">
       <div>
-        <div class="kicker">Portable build • Windows 10/11</div>
-        <h1 id="title" class="title">Getting Started with DB Browser (SQLCipher) for Windows</h1>
-        <p class="lead">Follow this quick start to run the portable build, configure SQLCipher defaults, and open or create your first encrypted SQLite database. No installation required.</p>
+        <div class="kicker">Encryption basics • Compatibility • Performance</div>
+        <h1 id="title" class="title">SQLCipher in DB Browser — Encryption Basics</h1>
+        <p class="lead">Learn how SQLCipher encryption works in DB Browser, which parameters influence compatibility and performance, and what defaults to choose for secure, predictable results on Windows.</p>
         <div class="cta-row">
-          <a class="btn" href="/download.html" title="Go to Download">
+          <a class="btn" href="/download.html" title="Get the portable build">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin-right:6px"><use href="#icon-download"></use></svg>
-            Download (Portable)
+            Get the portable build
           </a>
-          <a class="btn secondary" href="/sqlcipher.html">Encryption Basics</a>
+          <a class="btn secondary" href="/open-encrypted-db.html">Open an encrypted DB</a>
         </div>
       </div>
-      <aside class="card" aria-label="Tips">
-        <strong>Before you begin</strong>
+      <aside class="card" aria-label="Key points">
+        <strong>Key points</strong>
         <ul class="muted" style="padding-left:18px;margin:8px 0 0">
-          <li>Use a strong, unique passphrase for encryption.</li>
-          <li>Note cipher parameters (page size, KDF iterations) for compatibility.</li>
-          <li>Keep secure backups of your databases.</li>
+          <li>Passphrases derive keys using configurable KDF settings.</li>
+          <li>Page size, HMAC and KDF iterations affect compatibility.</li>
+          <li>Choose balanced defaults; consistency across environments is crucial.</li>
         </ul>
       </aside>
     </section>
 
-    <!-- Steps -->
+    <!-- Fundamentals -->
     <section style="margin-top:18px" class="card">
-      <h2 style="margin:0 0 6px 0">Step‑by‑step</h2>
-      <div class="steps">
-        <div class="step">
-          <h3>Download the portable build</h3>
-          <p class="muted">Go to the <a href="/download.html">Download page</a> and complete the CAPTCHA check to unlock the secure download. The portable build runs without installation.</p>
-        </div>
-        <div class="step">
-          <h3>Run the executable</h3>
-          <p class="muted">Launch the downloaded executable on Windows 10/11. If SmartScreen appears, click “More info” → “Run anyway” only if you trust the source.</p>
-        </div>
-        <div class="step">
-          <h3>Open or create a database</h3>
-          <p class="muted">Use “Open Database” to select an existing file, or “New Database” to create one. For encryption, choose SQLCipher when prompted and enter a strong passphrase.</p>
-          <div class="tip"><span>Need a hand? See <a href="/open-encrypted-db.html">Open an Encrypted DB</a> for parameter guidance and common pitfalls.</span></div>
-        </div>
-        <div class="step">
-          <h3>Set SQLCipher defaults (optional)</h3>
-          <p class="muted">Adjust cipher settings (page size, KDF iterations, HMAC) to match your security/performance targets. Consistency matters when sharing databases across environments.</p>
-          <div class="tip"><span>Read: <a href="/sqlcipher.html">SQLCipher basics</a> and <a href="/performance-tips.html">Performance tips</a>.</span></div>
-        </div>
-        <div class="step">
-          <h3>Import CSV data (optional)</h3>
-          <p class="muted">Use the Import feature to load CSV into a new or existing table. Verify column types and constraints after import.</p>
-          <div class="tip"><span>Guide: <a href="/csv-import-export.html">Import & Export CSV</a>.</span></div>
-        </div>
-        <div class="step">
-          <h3>Save and back up</h3>
-          <p class="muted">When finished, save changes and back up the encrypted database. Store passphrases securely in a password manager.</p>
-          <div class="tip"><span>Best practices: <a href="/best-practices-security.html">Security recommendations</a>.</span></div>
-        </div>
-      </div>
+      <h2 style="margin:0 0 6px 0">Fundamentals of SQLCipher encryption</h2>
+      <p class="muted">SQLCipher extends SQLite with transparent AES‑256 encryption. A user‑provided passphrase is transformed into encryption keys using a key derivation function (KDF) with a salt and iterations. The database file is encrypted page by page and includes integrity protection.</p>
+      <div class="tip">Use strong, unique passphrases. Store them in a trusted password manager. Never hardcode or share passphrases in plaintext.</div>
+      <ul class="list">
+        <li><strong>Passphrase → Key:</strong> Derived via KDF with salt and iterations.</li>
+        <li><strong>Page size:</strong> Common values influence file layout and performance.</li>
+        <li><strong>Integrity:</strong> Built‑in mechanisms help detect tampering and corruption.</li>
+      </ul>
     </section>
 
-    <!-- Troubleshooting preview -->
+    <!-- Compatibility settings -->
     <section style="margin-top:18px" class="card">
-      <h2 style="margin:0 0 6px 0">Quick troubleshooting</h2>
-      <ul class="muted" style="padding-left:18px;margin:8px 0 0">
-        <li>Download didn’t start? Return to the <a href="/download.html">Download page</a> and retry the CAPTCHA.</li>
-        <li>“Wrong key” or “file is not a database”? See <a href="/wrong-key-errors.html">Fix “wrong key”</a> and the <a href="/troubleshooting.html">Troubleshooting hub</a>.</li>
-        <li>Performance concerns? Review <a href="/performance-tips.html">Performance tips</a> and PRAGMA guidance.</li>
+      <h2 style="margin:0 0 6px 0">Compatibility: what must match</h2>
+      <p class="muted">When opening an existing encrypted database, the reader must know or match the original encryption parameters. Mismatches typically lead to “wrong key” or “file is not a database”.</p>
+      <ul class="list">
+        <li><strong>KDF iterations:</strong> Higher counts are stronger but slower. Match the value used to create the database.</li>
+        <li><strong>Page size:</strong> Must be consistent between creation and reading environments.</li>
+        <li><strong>HMAC / cipher settings:</strong> Ensure the same integrity options and cipher configuration.</li>
       </ul>
+      <div class="note">If you cannot open a database, first verify passphrase correctness, then confirm KDF iterations and page size used at creation time. Consult the original environment’s settings where possible.</div>
+      <p class="muted">Need a walkthrough? See <a href="/open-encrypted-db.html">Open an encrypted DB</a> and <a href="/wrong-key-errors.html">Fix “wrong key”</a>.</p>
+    </section>
+
+    <!-- Recommended defaults -->
+    <section style="margin-top:18px" class="card">
+      <h2 style="margin:0 0 6px 0">Recommended defaults</h2>
+      <p class="muted">Choose defaults that balance security and performance for your hardware and data sensitivity. Use modern iteration counts and keep them consistent across all environments that will access the database.</p>
+      <ul class="list">
+        <li>Use a long, unique passphrase with sufficient entropy.</li>
+        <li>Select a page size compatible with your ecosystem and needs.</li>
+        <li>Adopt robust KDF iteration counts appropriate for modern machines.</li>
+        <li>Document chosen parameters for future maintenance and sharing.</li>
+      </ul>
+      <p class="muted">For migration guidance, visit <a href="/migrate-to-sqlcipher.html">Migrate to SQLCipher</a>. For operational hygiene, read <a href="/best-practices-security.html">Security best practices</a>.</p>
+    </section>
+
+    <!-- Performance considerations -->
+    <section style="margin-top:18px" class="card">
+      <h2 style="margin:0 0 6px 0">Performance considerations</h2>
+      <p class="muted">Encryption adds overhead. Reasonable defaults and a few operational practices help keep performance acceptable.</p>
+      <ul class="list">
+        <li>Avoid unnecessary re‑keying operations on large databases.</li>
+        <li>Batch write operations where possible to reduce overhead.</li>
+        <li>Choose iteration counts that your target machines can handle comfortably.</li>
+        <li>Test import/export workflows with realistic data volumes.</li>
+      </ul>
+      <p class="muted">See <a href="/performance-tips.html">Performance tips</a> for more guidance.</p>
+    </section>
+
+    <!-- Common pitfalls -->
+    <section style="margin-top:18px" class="card">
+      <h2 style="margin:0 0 6px 0">Common pitfalls and how to avoid them</h2>
+      <ul class="list">
+        <li><strong>Wrong iteration count:</strong> Keep records of the value used at creation time.</li>
+        <li><strong>Mismatched page size:</strong> Ensure the same page size across environments.</li>
+        <li><strong>Weak passphrases:</strong> Use a password manager and avoid reuse.</li>
+        <li><strong>Untracked changes:</strong> Document and standardize parameters in team environments.</li>
+      </ul>
+      <p class="muted">Trouble opening a DB? Start with <a href="/wrong-key-errors.html">Fix “wrong key”</a> or visit the <a href="/troubleshooting.html">Troubleshooting hub</a>.</p>
     </section>
 
     <!-- Next steps -->
@@ -227,15 +237,15 @@
       <div class="grid-2">
         <div>
           <ul class="muted" style="padding-left:18px;margin:8px 0 0">
-            <li><a href="/sqlcipher.html">Understand SQLCipher parameters</a></li>
             <li><a href="/open-encrypted-db.html">Open an encrypted database</a></li>
-            <li><a href="/csv-import-export.html">Import and export CSV</a></li>
+            <li><a href="/encrypt-decrypt-sqlcipher.html">Encrypt / Decrypt guide</a></li>
+            <li><a href="/csv-import-export.html">Import & export CSV</a></li>
           </ul>
         </div>
         <div>
           <ul class="muted" style="padding-left:18px;margin:8px 0 0">
-            <li><a href="/best-practices-security.html">Security best practices</a></li>
-            <li><a href="/troubleshooting.html">Troubleshooting hub</a></li>
+            <li><a href="/performance-tips.html">Performance tips</a></li>
+            <li><a href="/migrate-to-sqlcipher.html">Migrate to SQLCipher</a></li>
             <li><a href="/download.html">Get the portable build</a></li>
           </ul>
         </div>
@@ -245,7 +255,7 @@
     <div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
       <div class="muted">Page last modified: <span id="lastModified" class="muted">--</span></div>
       <div class="muted">|</div>
-      <div class="muted">Canonical: <a href="https://db-browser.github.io/getting-started.html">https://db-browser.github.io/getting-started.html</a></div>
+      <div class="muted">Canonical: <a href="https://db-browser.github.io/sqlcipher.html">https://db-browser.github.io/sqlcipher.html</a></div>
     </div>
   </main>
 
@@ -280,7 +290,7 @@
 
   <!-- Inline JS: consent + small helpers -->
   <script>
-    // Consent helpers (same model across site)
+    // Consent helpers
     const CONSENT_KEY = 'dbbrowser_consent_v2';
     function setConsent(val){ try{localStorage.setItem(CONSENT_KEY,val)}catch(e){} }
     function getConsent(){ try{return localStorage.getItem(CONSENT_KEY)}catch(e){return null} }

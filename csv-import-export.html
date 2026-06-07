@@ -5,21 +5,21 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <title>Getting Started with DB Browser (SQLCipher) for Windows — Portable Guide</title>
-  <meta name="description" content="Step‑by‑step guide to run the portable DB Browser (SQLCipher) on Windows. First launch, basic setup, encryption defaults, opening and creating encrypted databases, and essential tips.">
-  <link rel="canonical" href="https://db-browser.github.io/getting-started.html">
+  <title>Import and Export CSV — DB Browser (SQLCipher) for Windows</title>
+  <meta name="description" content="How to import CSV into an encrypted SQLite database and export tables to CSV using DB Browser with SQLCipher on Windows. Encoding, delimiters, types, large files and troubleshooting.">
+  <link rel="canonical" href="https://db-browser.github.io/csv-import-export.html">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Getting Started with DB Browser (SQLCipher) for Windows — Portable Guide">
-  <meta property="og:description" content="Run the portable build, configure SQLCipher settings, open or create encrypted SQLite databases, and import CSV — all step by step.">
+  <meta property="og:title" content="Import and Export CSV — DB Browser (SQLCipher) for Windows">
+  <meta property="og:description" content="Step‑by‑step CSV import/export with DB Browser (SQLCipher): encoding, delimiters, types, large files and troubleshooting.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://db-browser.github.io/getting-started.html">
+  <meta property="og:url" content="https://db-browser.github.io/csv-import-export.html">
   <meta property="og:image" content="https://db-browser.github.io/og-image.png">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Getting Started with DB Browser (SQLCipher) for Windows — Portable Guide">
-  <meta name="twitter:description" content="Run the portable build, configure SQLCipher, open or create encrypted databases, and import CSV — step by step.">
+  <meta name="twitter:title" content="Import and Export CSV — DB Browser (SQLCipher) for Windows">
+  <meta name="twitter:description" content="Import CSV into SQLCipher DBs and export tables to CSV in DB Browser on Windows. Tips for encoding, types and big files.">
   <meta name="twitter:image" content="https://db-browser.github.io/og-image.png">
 
   <meta name="author" content="Community / Unofficial resource">
@@ -43,7 +43,7 @@
     gtag('config', 'G-N1MPKLJ6KC', { 'anonymize_ip': true });
   </script>
 
-  <!-- Styles (consistent with index) -->
+  <!-- Styles (consistent with site) -->
   <style>
     :root{ --bg:#ffffff; --text:#0b2545; --muted:#6b7280; --accent:#0b63a5; --accent-2:#f7a21a; --card:#f8fafc; --radius:10px; --maxwidth:1100px; --focus:3px solid rgba(11,99,165,0.15); }
     *{box-sizing:border-box}
@@ -72,16 +72,10 @@
     .btn:focus{outline:var(--focus)}
 
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .steps{counter-reset: step}
-    .step{background:#fff;border:1px solid #e6eef6;border-radius:10px;padding:14px;margin:0 0 12px}
-    .step h3{margin:0 0 6px 0;font-size:18px}
-    .step::before{counter-increment: step;content: counter(step);display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:999px;background:var(--accent);color:#fff;font-weight:700;margin-right:8px}
-
     .muted{color:var(--muted);font-size:14px}
-    .tip{display:flex;gap:10px;align-items:flex-start;background:#f0f7ff;border:1px solid #dbeefc;border-radius:10px;padding:10px;margin:10px 0}
-
-    footer{padding:24px 20px;border-top:1px solid #e6eef6;margin-top:40px}
-    .footer-grid{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+    .list{margin:6px 0 0 18px;color:var(--muted)}
+    .tip{background:#f0f7ff;border:1px solid #dbeefc;border-radius:10px;padding:10px;margin:10px 0}
+    .warn{background:#fff7e6;border:1px solid #ffe0a3;border-radius:10px;padding:10px;margin:10px 0;color:#8b5e00}
 
     @media (max-width:899px){.hero{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}}
     @media (max-width:699px){.nav-list{display:none}.mobile-nav{display:flex;margin-left:auto}}
@@ -100,22 +94,32 @@
     "@graph": [
       {
         "@type": "HowTo",
-        "name": "Getting Started with DB Browser (SQLCipher) — Portable on Windows",
-        "description": "Download, run and configure the portable SQLCipher build. Open or create an encrypted database and import CSV.",
-        "url": "https://db-browser.github.io/getting-started.html",
+        "name": "Import CSV into an Encrypted Database (SQLCipher)",
+        "description": "Open the SQLCipher database, choose Import, map columns, set types and constraints, and validate the result.",
+        "url": "https://db-browser.github.io/csv-import-export.html#import",
         "step": [
-          {"@type": "HowToStep", "name": "Download the portable build", "url": "https://db-browser.github.io/download.html", "text": "Open the Download page and unlock the secure download via CAPTCHA."},
-          {"@type": "HowToStep", "name": "Run the executable", "text": "Launch the portable executable on Windows 10/11. No installation required."},
-          {"@type": "HowToStep", "name": "Configure SQLCipher defaults", "url": "https://db-browser.github.io/sqlcipher.html", "text": "Set cipher parameters and iteration counts appropriate for your environment."},
-          {"@type": "HowToStep", "name": "Open or create an encrypted DB", "url": "https://db-browser.github.io/open-encrypted-db.html", "text": "Open an existing SQLCipher database or create a new encrypted one with a strong passphrase."},
-          {"@type": "HowToStep", "name": "Import CSV (optional)", "url": "https://db-browser.github.io/csv-import-export.html", "text": "Import data from CSV and verify schema and types."}
+          {"@type":"HowToStep","name":"Open the encrypted DB","url":"https://db-browser.github.io/open-encrypted-db.html","text":"Provide passphrase and matching parameters."},
+          {"@type":"HowToStep","name":"Choose Import CSV","text":"Pick the CSV file and set delimiter, quote and encoding (UTF‑8 recommended)."},
+          {"@type":"HowToStep","name":"Map columns","text":"Review header detection, data types and constraints; adjust as needed."},
+          {"@type":"HowToStep","name":"Import and verify","text":"Run the import and validate row counts and sample records."}
+        ]
+      },
+      {
+        "@type": "HowTo",
+        "name": "Export a Table to CSV",
+        "description": "Select a table or query result and export to CSV with correct delimiter, quoting and encoding.",
+        "url": "https://db-browser.github.io/csv-import-export.html#export",
+        "step": [
+          {"@type":"HowToStep","name":"Select table or query","text":"Open the table or run a SELECT to produce the desired result set."},
+          {"@type":"HowToStep","name":"Export to CSV","text":"Pick delimiter and quoting; choose UTF‑8 unless a legacy encoding is required."},
+          {"@type":"HowToStep","name":"Validate output","text":"Open the CSV in a text editor; check headers, separators and sample rows."}
         ]
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
           {"@type":"ListItem", "position": 1, "name": "Home", "item": "https://db-browser.github.io/"},
-          {"@type":"ListItem", "position": 2, "name": "Getting Started", "item": "https://db-browser.github.io/getting-started.html"}
+          {"@type":"ListItem", "position": 2, "name": "CSV Import/Export", "item": "https://db-browser.github.io/csv-import-export.html"}
         ]
       }
     ]
@@ -135,7 +139,7 @@
       <nav aria-label="Main Navigation">
         <div class="nav-list">
           <a href="/download.html">Download</a>
-          <a href="/getting-started.html" aria-current="page">Getting Started</a>
+          <a href="/getting-started.html">Getting Started</a>
           <a href="/encrypt-decrypt-sqlcipher.html">Encrypt / Decrypt</a>
           <a href="/troubleshooting.html">Troubleshooting</a>
           <a href="/migrate-to-sqlcipher.html">Migrate</a>
@@ -155,70 +159,72 @@
     <!-- Hero -->
     <section class="hero card" aria-labelledby="title">
       <div>
-        <div class="kicker">Portable build • Windows 10/11</div>
-        <h1 id="title" class="title">Getting Started with DB Browser (SQLCipher) for Windows</h1>
-        <p class="lead">Follow this quick start to run the portable build, configure SQLCipher defaults, and open or create your first encrypted SQLite database. No installation required.</p>
+        <div class="kicker">CSV import/export • Encoding • Data types</div>
+        <h1 id="title" class="title">Import and Export CSV in DB Browser (SQLCipher)</h1>
+        <p class="lead">Import CSV into an encrypted database or export tables and query results to CSV with predictable encoding and delimiters. This guide covers common pitfalls, data type mapping and large file strategies on Windows.</p>
         <div class="cta-row">
-          <a class="btn" href="/download.html" title="Go to Download">
+          <a class="btn" href="/download.html" title="Get the portable build">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin-right:6px"><use href="#icon-download"></use></svg>
-            Download (Portable)
+            Get the portable build
           </a>
-          <a class="btn secondary" href="/sqlcipher.html">Encryption Basics</a>
+          <a class="btn secondary" href="/open-encrypted-db.html">Open an Encrypted DB</a>
+          <a class="btn secondary" href="/sqlcipher.html">SQLCipher basics</a>
         </div>
       </div>
-      <aside class="card" aria-label="Tips">
-        <strong>Before you begin</strong>
+      <aside class="card" aria-label="Quick tips">
+        <strong>Quick tips</strong>
         <ul class="muted" style="padding-left:18px;margin:8px 0 0">
-          <li>Use a strong, unique passphrase for encryption.</li>
-          <li>Note cipher parameters (page size, KDF iterations) for compatibility.</li>
-          <li>Keep secure backups of your databases.</li>
+          <li>Use UTF‑8 encoding unless legacy systems require otherwise.</li>
+          <li>Keep headers consistent; verify column order and names.</li>
+          <li>Decide on delimiters and quoting; default to comma + quotes.</li>
         </ul>
       </aside>
     </section>
 
-    <!-- Steps -->
-    <section style="margin-top:18px" class="card">
-      <h2 style="margin:0 0 6px 0">Step‑by‑step</h2>
-      <div class="steps">
-        <div class="step">
-          <h3>Download the portable build</h3>
-          <p class="muted">Go to the <a href="/download.html">Download page</a> and complete the CAPTCHA check to unlock the secure download. The portable build runs without installation.</p>
-        </div>
-        <div class="step">
-          <h3>Run the executable</h3>
-          <p class="muted">Launch the downloaded executable on Windows 10/11. If SmartScreen appears, click “More info” → “Run anyway” only if you trust the source.</p>
-        </div>
-        <div class="step">
-          <h3>Open or create a database</h3>
-          <p class="muted">Use “Open Database” to select an existing file, or “New Database” to create one. For encryption, choose SQLCipher when prompted and enter a strong passphrase.</p>
-          <div class="tip"><span>Need a hand? See <a href="/open-encrypted-db.html">Open an Encrypted DB</a> for parameter guidance and common pitfalls.</span></div>
-        </div>
-        <div class="step">
-          <h3>Set SQLCipher defaults (optional)</h3>
-          <p class="muted">Adjust cipher settings (page size, KDF iterations, HMAC) to match your security/performance targets. Consistency matters when sharing databases across environments.</p>
-          <div class="tip"><span>Read: <a href="/sqlcipher.html">SQLCipher basics</a> and <a href="/performance-tips.html">Performance tips</a>.</span></div>
-        </div>
-        <div class="step">
-          <h3>Import CSV data (optional)</h3>
-          <p class="muted">Use the Import feature to load CSV into a new or existing table. Verify column types and constraints after import.</p>
-          <div class="tip"><span>Guide: <a href="/csv-import-export.html">Import & Export CSV</a>.</span></div>
-        </div>
-        <div class="step">
-          <h3>Save and back up</h3>
-          <p class="muted">When finished, save changes and back up the encrypted database. Store passphrases securely in a password manager.</p>
-          <div class="tip"><span>Best practices: <a href="/best-practices-security.html">Security recommendations</a>.</span></div>
-        </div>
-      </div>
+    <!-- Import CSV -->
+    <section id="import" style="margin-top:18px" class="card">
+      <h2 style="margin:0 0 6px 0">Import CSV into an encrypted database</h2>
+      <ol class="list" style="list-style:decimal">
+        <li>Open your encrypted database (<a href="/open-encrypted-db.html">how to open</a>) and choose <em>Import → Table from CSV</em>.</li>
+        <li>Pick the CSV file and set <strong>delimiter</strong> (comma, semicolon, tab), <strong>quote</strong> and <strong>encoding</strong> (UTF‑8 recommended).</li>
+        <li>Review detected headers and <strong>map columns</strong> to target names and <strong>types</strong> (INTEGER, REAL, TEXT, BLOB). Add constraints if needed.</li>
+        <li>Run the import and verify row counts. Spot‑check a few records and special characters.</li>
+      </ol>
+      <div class="tip">Large files? Split into chunks, or import into a staging table and then transform with SQL for better control.</div>
+      <p class="muted">Trouble importing? See <a href="/troubleshooting.html">Troubleshooting</a> for encoding and delimiter issues.</p>
     </section>
 
-    <!-- Troubleshooting preview -->
+    <!-- Export CSV -->
+    <section id="export" style="margin-top:18px" class="card">
+      <h2 style="margin:0 0 6px 0">Export a table or query to CSV</h2>
+      <ol class="list" style="list-style:decimal">
+        <li>Select the table you want to export, or run a SELECT query to produce the desired result set.</li>
+        <li>Choose <em>Export → Table (or Query) to CSV</em>, set delimiter and quoting, and pick <strong>UTF‑8</strong> unless a consumer requires another encoding.</li>
+        <li>Save the file and validate it in a text editor (headers, separators, sample rows).</li>
+      </ol>
+      <div class="tip">Dates and times: prefer ISO‑8601 (YYYY‑MM‑DD, HH:MM:SS) for predictable parsing in other tools.</div>
+    </section>
+
+    <!-- Data types & cleaning -->
     <section style="margin-top:18px" class="card">
-      <h2 style="margin:0 0 6px 0">Quick troubleshooting</h2>
-      <ul class="muted" style="padding-left:18px;margin:8px 0 0">
-        <li>Download didn’t start? Return to the <a href="/download.html">Download page</a> and retry the CAPTCHA.</li>
-        <li>“Wrong key” or “file is not a database”? See <a href="/wrong-key-errors.html">Fix “wrong key”</a> and the <a href="/troubleshooting.html">Troubleshooting hub</a>.</li>
-        <li>Performance concerns? Review <a href="/performance-tips.html">Performance tips</a> and PRAGMA guidance.</li>
+      <h2 style="margin:0 0 6px 0">Data types, NULLs and cleaning</h2>
+      <ul class="list">
+        <li><strong>Types</strong>: SQLite is flexible; choose practical affinities. Validate numeric and date fields after import.</li>
+        <li><strong>NULLs</strong>: Decide how to represent empty values (empty string vs literal NULL) and configure the importer accordingly.</li>
+        <li><strong>Whitespace</strong>: Trim fields if the source adds trailing spaces; standardize line endings (Windows CRLF).</li>
       </ul>
+      <p class="muted">Need structured examples? See <a href="/cli-commands.html">Useful SQL/PRAGMA commands</a> for post‑import checks.</p>
+    </section>
+
+    <!-- Performance and large files -->
+    <section style="margin-top:18px" class="card">
+      <h2 style="margin:0 0 6px 0">Performance and large files</h2>
+      <ul class="list">
+        <li>Import in batches; wrap large operations in transactions where possible.</li>
+        <li>Consider temporary indexes for faster dedup/joins, then drop them.</li>
+        <li>Disable non‑critical triggers during bulk load, re‑enable afterwards.</li>
+      </ul>
+      <p class="muted">More guidance: <a href="/performance-tips.html">Performance tips</a>.</p>
     </section>
 
     <!-- Next steps -->
@@ -227,14 +233,14 @@
       <div class="grid-2">
         <div>
           <ul class="muted" style="padding-left:18px;margin:8px 0 0">
-            <li><a href="/sqlcipher.html">Understand SQLCipher parameters</a></li>
             <li><a href="/open-encrypted-db.html">Open an encrypted database</a></li>
-            <li><a href="/csv-import-export.html">Import and export CSV</a></li>
+            <li><a href="/encrypt-decrypt-sqlcipher.html">Encrypt/Decrypt guide</a></li>
+            <li><a href="/sqlcipher.html">SQLCipher basics</a></li>
           </ul>
         </div>
         <div>
           <ul class="muted" style="padding-left:18px;margin:8px 0 0">
-            <li><a href="/best-practices-security.html">Security best practices</a></li>
+            <li><a href="/performance-tips.html">Performance tips</a></li>
             <li><a href="/troubleshooting.html">Troubleshooting hub</a></li>
             <li><a href="/download.html">Get the portable build</a></li>
           </ul>
@@ -245,7 +251,7 @@
     <div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
       <div class="muted">Page last modified: <span id="lastModified" class="muted">--</span></div>
       <div class="muted">|</div>
-      <div class="muted">Canonical: <a href="https://db-browser.github.io/getting-started.html">https://db-browser.github.io/getting-started.html</a></div>
+      <div class="muted">Canonical: <a href="https://db-browser.github.io/csv-import-export.html">https://db-browser.github.io/csv-import-export.html</a></div>
     </div>
   </main>
 
@@ -280,7 +286,7 @@
 
   <!-- Inline JS: consent + small helpers -->
   <script>
-    // Consent helpers (same model across site)
+    // Consent helpers
     const CONSENT_KEY = 'dbbrowser_consent_v2';
     function setConsent(val){ try{localStorage.setItem(CONSENT_KEY,val)}catch(e){} }
     function getConsent(){ try{return localStorage.getItem(CONSENT_KEY)}catch(e){return null} }
